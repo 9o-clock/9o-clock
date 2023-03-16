@@ -27,8 +27,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    //swagger
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
     // mapper
     implementation "com.fasterxml.jackson.core:jackson-databind"
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
