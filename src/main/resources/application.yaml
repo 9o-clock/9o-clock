@@ -1,0 +1,13 @@
+spring:
+  config:
+    import:
+      - classpath:db.properties
+  profiles:
+    include:
+      - db
+    group:
+      local: h2
+      default: local
+      db: local
+      dev: local
+      prod:
