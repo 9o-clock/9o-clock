@@ -23,7 +23,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 public class QuizEntity {
   @GeneratedValue(strategy =  GenerationType.AUTO)
   @Id
-  private Long quizId;
+  private Integer quizId;
 
   @Column(nullable = false)
   private String title;

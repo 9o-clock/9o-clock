@@ -3,7 +3,6 @@ package dreamdiary.quiz.controller;
 import dreamdiary.quiz.domain.dto.QuizDto;
 import dreamdiary.quiz.domain.entity.QuizEntity;
 import dreamdiary.quiz.service.QuizService;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,8 +30,8 @@ public class QuizController {
     return new ResponseEntity<>(HttpStatus.ACCEPTED);
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<QuizDto> getQuizById(@PathVariable int quizId) {
+  @GetMapping("/{quizId}")
+  public ResponseEntity<QuizDto> getQuizById(@PathVariable("quizId") int quizId) {
     Optional<QuizEntity> quiz = quizService.findQuiz(quizId);
     if(quiz.isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -40,14 +39,14 @@ public class QuizController {
       return new ResponseEntity<>(quiz.get().toDto(), HttpStatus.OK);
   }
 
-  @GetMapping("/{date}")
-  public ResponseEntity<QuizDto> getQuizByReleasedDate(@PathVariable LocalDateTime releasedDate) {
-    Optional<QuizEntity> quiz = quizService.findQuiz(releasedDate);
-    if(quiz.isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-    return new ResponseEntity<>(quiz.get().toDto(), HttpStatus.OK);
-  }
+//  @GetMapping("/{releasedDate}")
+//  public ResponseEntity<QuizDto> getQuizByReleasedDate(@PathVariable("releasedDate") LocalDateTime releasedDate) {
+//    Optional<QuizEntity> quiz = quizService.findQuiz(releasedDate);
+//    if(quiz.isEmpty()) {
+//      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
+//    return new ResponseEntity<>(quiz.get().toDto(), HttpStatus.OK);
+//  }
 
   @GetMapping("list")
   public ResponseEntity<List<QuizDto>> getQuizAll() {
@@ -60,8 +59,9 @@ public class QuizController {
     return new ResponseEntity<>(quizdtoList, HttpStatus.OK);
   }
 
-  @DeleteMapping("{/{id}")
-  public ResponseEntity<QuizDto> removeQuiz(@PathVariable int quizId) {
+  @DeleteMapping("/{quizId}")
+  public ResponseEntity<QuizDto> removeQuiz(@PathVariable("quizId") Integer quizId) {
+    //TODO exception 발생하는 경우 응답값 결과 처리 수정
     quizService.deleteQuiz(quizId);
     return new ResponseEntity<>(HttpStatus.ACCEPTED);
   }
