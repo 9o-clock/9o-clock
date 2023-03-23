@@ -1,5 +1,6 @@
 package dreamdiary.quiz.domain.entity;
 
+import dreamdiary.quiz.domain.dto.QuizDto;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,4 +48,15 @@ public class QuizEntity {
   @Builder.Default
   @LastModifiedDate
   private LocalDateTime modifiedDate;
+
+  public QuizDto toDto() {
+    return QuizDto.builder().title(this.title)
+        .description(this.description)
+        .answer(this.answer)
+        .optNumOne(optNumOne)
+        .optNumTwo(this.optNumTwo)
+        .optNumThree(this.optNumThree)
+        .optNumFour(this.optNumFour)
+        .build();
+  }
 }

@@ -2,8 +2,15 @@ package dreamdiary.quiz.domain.dto;
 
 
 import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-
+@SuperBuilder
+@NoArgsConstructor
+@Getter
+@Setter
 public class QuizDto {
   private String title;
   private String description;
@@ -16,6 +23,4 @@ public class QuizDto {
   private String optNumFour;
 
   private LocalDateTime releasedDate;
-
-
 }
