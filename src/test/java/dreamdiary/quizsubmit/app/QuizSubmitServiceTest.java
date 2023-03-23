@@ -12,9 +12,9 @@ class QuizSubmitServiceTest {
     @InjectMocks
     private QuizSubmitService quizSubmitService;
 
-    @DisplayName("제출한 퀴즈 정답이 알맞은 형식인지 ")
+    @DisplayName("제출한 퀴즈 정답이 1~4사이의 값인지 검사.")
     @Test
-    void submitQuiz_validate() {
-
+    void submitQuiz_validateAnswer() {
+//        quizSubmitService.submitQuiz();
     }
 }
