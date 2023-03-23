@@ -9,13 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuperBuilder
 @Getter
 @Entity
 @Table(name="tb_quiz")
@@ -41,11 +42,9 @@ public class QuizEntity {
 
   private LocalDateTime releasedDate;
 
-  @Builder.Default
   @CreatedDate
   private LocalDateTime registeredDate;
 
-  @Builder.Default
   @LastModifiedDate
   private LocalDateTime modifiedDate;
 
