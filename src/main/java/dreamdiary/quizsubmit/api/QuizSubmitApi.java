@@ -17,8 +17,6 @@ public class QuizSubmitApi {
 
     @PostMapping("quizzes/{quizId}/submissions")
     public void submitQuiz(Principal principal, @PathVariable(name = "quizId") Long quizId, @RequestParam(value = "answer", required = false) Integer answer) {
-        // TODO null 체크에 대한 책임을 누가 갖을지 검토
-        // TODO 문자열 유니크 값으로 로그인을 관리하면 filter 과정에서 체크될듯
         String userId = principal.getName();
         quizSubmitService.submitQuiz(Long.valueOf(userId), quizId, answer);
     }

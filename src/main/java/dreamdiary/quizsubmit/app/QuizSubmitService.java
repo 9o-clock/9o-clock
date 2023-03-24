@@ -17,7 +17,6 @@ import java.util.Optional;
 public class QuizSubmitService {
     private final QuizAnswerValidator answerValidator;
     private final QuizFindService quizFindService;
-
     private final QuizSubmitRepository quizSubmitRepository;
 
     public void submitQuiz(final Long userId, final Long quizId, final Integer answer) {
