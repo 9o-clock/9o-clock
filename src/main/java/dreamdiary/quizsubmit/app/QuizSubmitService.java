@@ -2,11 +2,14 @@ package dreamdiary.quizsubmit.app;
 
 import dreamdiary.quizsubmit.domain.QuizFindResponse;
 import dreamdiary.quizsubmit.domain.QuizFindService;
+import dreamdiary.quizsubmit.domain.QuizSubmit;
+import dreamdiary.quizsubmit.domain.QuizSubmitRepository;
 import dreamdiary.support.advice.exception.RequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -15,14 +18,16 @@ public class QuizSubmitService {
     private final QuizAnswerValidator answerValidator;
     private final QuizFindService quizFindService;
 
+    private final QuizSubmitRepository quizSubmitRepository;
+
     public void submitQuiz(final Long userId, final Long quizId, final Integer answer) {
         answerValidator.validate(answer);
-        // TODO 퀴즈 조회 요청(퀴즈 정답 제출 일정이 지났는지, 퀴즈 존재하는지 체크도 해야함)
         Optional<QuizFindResponse> quizFindResponseOptional = quizFindService.findQuiz(quizId);
-        quizFindResponseOptional.orElseThrow(() -> RequestException.of(HttpStatus.BAD_REQUEST, "요청한 퀴즈 정보가 존재하지 않습니다."));
-
-        // TODO 회원이 존재하는지 검사(이미 Principal 있는것이 검증이 된 것이므로 제외)
-        // TODO 이미 사용자가 제출한 퀴즈 정답이 있는지 조회
-        // TODO 저장
+        final QuizFindResponse quizFindResponse = quizFindResponseOptional.orElseThrow(() -> RequestException.of(HttpStatus.BAD_REQUEST, "요청한 퀴즈 정보가 존재하지 않습니다."));
+        if (null == quizFindResponse.getReleaseDate() || !quizFindResponse.getReleaseDate().isEqual(LocalDate.now()))
+            throw RequestException.of(HttpStatus.BAD_REQUEST, "해당 퀴즈는 정답을 제출할 수 없습니다.");
+        if (quizSubmitRepository.existsQuizSubmitByUserIdAndQuizId(userId, quizId))
+            throw RequestException.of(HttpStatus.BAD_REQUEST, "이미 해당 퀴즈의 정답을 제출하였습니다.");
+        QuizSubmit.create(userId, quizId, answer, quizSubmitRepository);
     }
 }
