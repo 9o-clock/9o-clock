@@ -3,15 +3,17 @@ package dreamdiary.quiz.domain.dto;
 
 import dreamdiary.quiz.domain.entity.QuizEntity;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
-@SuperBuilder
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter

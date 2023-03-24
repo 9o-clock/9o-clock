@@ -1,26 +1,26 @@
 package dreamdiary.quiz.domain.entity;
 
 import dreamdiary.quiz.domain.dto.QuizDto;
+import dreamdiary.support.jpa.DateAutoGenerator;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.Future;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SuperBuilder
 @Getter
 @Entity
-@Table(name="tb_quiz")
-public class QuizEntity {
+public class QuizEntity extends DateAutoGenerator {
   @GeneratedValue(strategy =  GenerationType.AUTO)
   @Id
   private Integer quizId;
@@ -40,13 +40,8 @@ public class QuizEntity {
   private String optNumThree;
   private String optNumFour;
 
+  @Future
   private LocalDateTime releasedDate;
-
-  @CreatedDate
-  private LocalDateTime registeredDate;
-
-  @LastModifiedDate
-  private LocalDateTime modifiedDate;
 
   public QuizDto toDto() {
     return QuizDto.builder().title(this.title)
@@ -56,6 +51,7 @@ public class QuizEntity {
         .optNumTwo(this.optNumTwo)
         .optNumThree(this.optNumThree)
         .optNumFour(this.optNumFour)
+        .releasedDate(this.releasedDate)
         .build();
   }
 }
