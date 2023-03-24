@@ -19,13 +19,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
@@ -117,7 +115,11 @@ class QuizSubmitServiceTest {
         RequestException exception = assertThrows(RequestException.class,
                 () -> quizSubmitService.submitQuiz(givenUserId, givenQuizId, 1));
 
-        Mockito.verify(mockQuizSubmitRepository,  times(1)).existsQuizSubmitByUserIdAndQuizId(givenUserId, givenQuizId);
+        Mockito.verify(mockQuizSubmitRepository,  times(1)).existsQuizSubmitByUserIdAndQuizId(userIdCaptor.capture(), quizIdCaptor.capture());
+        Assertions.assertThat(userIdCaptor.getValue()).isNotNull();
+        Assertions.assertThat(userIdCaptor.getValue()).isEqualTo(givenUserId);
+        Assertions.assertThat(quizIdCaptor.getValue()).isNotNull();
+        Assertions.assertThat(quizIdCaptor.getValue()).isEqualTo(givenQuizId);
         Assertions.assertThat(exception).isNotNull();
         Assertions.assertThat(exception.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
         Assertions.assertThat(exception.getMessage()).isEqualTo("이미 해당 퀴즈의 정답을 제출하였습니다.");
