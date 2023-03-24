@@ -3,12 +3,14 @@ package dreamdiary.quiz.controller;
 import dreamdiary.quiz.domain.dto.QuizDto;
 import dreamdiary.quiz.domain.entity.QuizEntity;
 import dreamdiary.quiz.service.QuizService;
+import dreamdiary.quiz.validation.QuizValidator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +20,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("quiz")
+@RequiredArgsConstructor
 public class QuizController {
   private final QuizService quizService;
+  private final QuizValidator quizValidator;
 
   @PostMapping
-  public ResponseEntity<Object> addQuiz(@Validated @RequestBody QuizDto quiz) {
+  public ResponseEntity<Object> addQuiz(@Validated @RequestBody QuizDto quiz, BindingResult bindingResult) {
+    quizValidator.validate(quiz, bindingResult);
+    if (bindingResult.hasErrors()) {
+      //TODO 에러 반환 처리
+//      return bindingResult.getFieldErrors();
+    }
+
     //TODO image 데이터 추가
     quizService.saveQuiz(quiz);
     return new ResponseEntity<>(HttpStatus.ACCEPTED);
