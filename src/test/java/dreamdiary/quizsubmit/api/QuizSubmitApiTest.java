@@ -34,7 +34,7 @@ class QuizSubmitApiTest {
     private ArgumentCaptor<Long> quizIdCaptor;
 
     @Captor
-    private ArgumentCaptor<Long> answerCaptor;
+    private ArgumentCaptor<Integer> answerCaptor;
 
     @BeforeEach
     void setUp() {
@@ -55,7 +55,7 @@ class QuizSubmitApiTest {
     void submitQuiz_passesDataToService() throws Exception {
         final Long givenUserId = 1L;
         final Long givenQuizId = 10L;
-        final Long givenAnswer = 100L;
+        final Integer givenAnswer = 4;
 
         mockMvc.perform(post("/quizzes/{quizId}/submissions", givenQuizId)
                 .principal(new UserPrincipal(String.valueOf(givenUserId)))
