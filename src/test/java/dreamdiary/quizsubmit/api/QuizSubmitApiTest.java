@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,12 +28,10 @@ class QuizSubmitApiTest {
     private QuizSubmitApi quizSubmitApi;
     @Mock
     private QuizSubmitService mockQuizSubmitService;
-
     @Captor
     private ArgumentCaptor<Long> userIdCaptor;
     @Captor
     private ArgumentCaptor<Long> quizIdCaptor;
-
     @Captor
     private ArgumentCaptor<Integer> answerCaptor;
 
@@ -68,5 +67,13 @@ class QuizSubmitApiTest {
         Assertions.assertThat(quizIdCaptor.getValue()).isEqualTo(givenQuizId);
         Assertions.assertThat(answerCaptor.getValue()).isNotNull();
         Assertions.assertThat(answerCaptor.getValue()).isEqualTo(givenAnswer);
+    }
+
+    @DisplayName("제출한 퀴즈의 정답 가져오기 성공 시 status=200")
+    @Test
+    void getSubmitQuiz() throws Exception {
+        mockMvc.perform(get("/quizzes/{quizId}/submissions", 1)
+                .principal(new UserPrincipal("1")))
+                .andExpect(status().isOk());
     }
 }
