@@ -7,11 +7,13 @@ import dreamdiary.user.app.IUserService;
 import dreamdiary.user.app.UserValidator;
 import dreamdiary.user.domain.UserDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping(UserApi.PATH)
 @RequiredArgsConstructor
@@ -30,6 +32,8 @@ public class UserApi {
 
     @PostMapping
     public String register(@Validated @RequestBody UserDto userDto, BindingResult bindingResult) throws JsonProcessingException {
+        log.info("[USER] 회원가입 요청");
+        
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException(bindingResult.getAllErrors().get(0).toString());
         }
