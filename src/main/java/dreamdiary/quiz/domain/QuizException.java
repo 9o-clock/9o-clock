@@ -5,7 +5,7 @@ public class QuizException extends RuntimeException {
         super(message);
     }
 
-    public static QuizException InvalidFormat() {
+    public static QuizException invalidFormat() {
         return new QuizException("퀴즈 형식이 잘못되었습니다.");
     }
 }

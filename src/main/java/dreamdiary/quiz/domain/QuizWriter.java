@@ -9,7 +9,7 @@ public class QuizWriter {
 
 
     public QuizWriter(final String writer) {
-        if (!StringUtils.hasText(writer)) throw QuizException.InvalidFormat();
+        if (!StringUtils.hasText(writer)) throw QuizException.invalidFormat();
         this.value = writer;
     }
 }

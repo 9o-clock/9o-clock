@@ -8,7 +8,7 @@ public class QuizContent {
     private final String value;
 
     public QuizContent(final String value) {
-        if (!StringUtils.hasText(value)) throw QuizException.InvalidFormat();
+        if (!StringUtils.hasText(value)) throw QuizException.invalidFormat();
         this.value = value;
     }
 }
