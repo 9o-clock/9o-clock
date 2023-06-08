@@ -15,6 +15,6 @@ class QuizAddApi {
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("quizzes")
     void addQuiz() {
-        quizAddUseCase.addQuiz();
+        quizAddUseCase.addQuiz(null);
     }
 }

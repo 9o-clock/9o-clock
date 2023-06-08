@@ -1,14 +1,21 @@
 package dreamdiary.quiz.app;
 
+import dreamdiary.quiz.domain.Quiz;
+import dreamdiary.quiz.domain.QuizException;
+import dreamdiary.quiz.domain.QuizRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 class QuizAddService implements QuizAddUseCase {
+    private final QuizGenerator quizGenerator;
+    private final QuizRepository quizRepository;
+
     @Override
-    public void addQuiz() {
-        // 요청자
-        // 동일한 제목의 퀴즈가 있으면 안되므로 검사
-        // 제목, 내용, 개시 일자 정보 생성
+    public void addQuiz(final QuizAddRequest request) {
+        final Quiz quiz = quizGenerator.toQuiz(request);
+        if (quizRepository.isTitleAlreadyExists(quiz.getTitle())) throw QuizException.duplicatedTitleExists();
         // 퀴즈 저장
     }
 }
