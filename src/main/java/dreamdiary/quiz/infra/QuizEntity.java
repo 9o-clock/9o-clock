@@ -21,7 +21,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -43,7 +42,7 @@ class QuizEntity {
     private LocalDateTime releaseAt;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "quiz_id")
-    private List<ChoiceEntity> choices = new ArrayList<>();
+    private List<ChoiceEntity> choices;
     @CreatedDate
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
