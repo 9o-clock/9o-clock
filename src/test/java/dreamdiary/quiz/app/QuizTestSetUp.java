@@ -6,7 +6,6 @@ import dreamdiary.quiz.domain.Quiz;
 import dreamdiary.quiz.domain.QuizContent;
 import dreamdiary.quiz.domain.QuizRepository;
 import dreamdiary.quiz.domain.QuizTitle;
-import dreamdiary.quiz.domain.QuizWriter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -41,7 +40,6 @@ public class QuizTestSetUp {
 
     protected Quiz.QuizBuilder anQuiz() {
         return Quiz.builder()
-                .writer(new QuizWriter("writer"))
                 .title(new QuizTitle("Quiz Title"))
                 .content(new QuizContent("Quiz Content"))
                 .choices(new Choices(new Choice("강아지"), new Choice("고양이")))

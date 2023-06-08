@@ -33,6 +33,9 @@ dependencies {
     //h2 - local running
     runtimeOnly 'com.h2database:h2'
     testRuntimeOnly 'com.h2database:h2'
+    // integrationTest
+    testImplementation 'io.cucumber:cucumber-java:7.0.0'
+    testImplementation 'io.cucumber:cucumber-spring:7.0.0'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
