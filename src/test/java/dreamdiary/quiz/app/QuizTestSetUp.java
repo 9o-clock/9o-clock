@@ -14,6 +14,7 @@ import org.mockito.BDDMockito;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDateTime;
 
@@ -25,9 +26,12 @@ public class QuizTestSetUp {
     protected QuizGenerator mockQuizGenerator;
     @Mock
     protected QuizRepository mockQuizRepository;
-
+    @Mock
+    protected ApplicationEventPublisher mockPublisher;
     @Captor
     protected ArgumentCaptor<QuizAddRequest> quizAddRequestCaptor;
+    @Captor
+    protected ArgumentCaptor<Object> publishEventCaptor;
 
     @BeforeEach
     void setUp() {

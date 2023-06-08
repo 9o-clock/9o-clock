@@ -40,4 +40,14 @@ class QuizAddServiceTest extends QuizTestSetUp {
 
         assertEquals(exception.getMessage(), QuizException.duplicatedTitleExists().getMessage());
     }
+
+    @DisplayName("퀴즈 생성 성공 이벤트 발행")
+    @Test
+    void addQuiz_publish_quiz_generated_event() {
+        final QuizAddRequest givenRequest = QuizAddRequest.builder().build();
+
+        quizAddService.addQuiz(givenRequest);
+
+        verify(mockPublisher, times(1)).publishEvent(publishEventCaptor.capture());
+    }
 }
