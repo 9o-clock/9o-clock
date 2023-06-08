@@ -13,12 +13,14 @@ class QuizAdaptor implements QuizRepository {
 
     @Override
     public boolean isTitleAlreadyExists(final QuizTitle title) {
-        return false;
+        return quizEntityRepository.existsByTitle(title.getValue());
     }
 
     @Override
     public Quiz store(final Quiz quiz) {
-
-        return null;
+        final QuizEntity entity = QuizEntity.mapped(quiz);
+        quizEntityRepository.save(entity);
+        // QuizStoredEvent Publish
+        return quiz;
     }
 }
