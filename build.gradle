@@ -29,6 +29,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // mapper
     implementation "com.fasterxml.jackson.core:jackson-databind"
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
@@ -38,20 +39,16 @@ dependencies {
     //h2 - local running
     runtimeOnly 'com.h2database:h2'
     testRuntimeOnly 'com.h2database:h2'
-    integrationTestRuntimeOnly 'com.h2database:h2'
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
-
     // integrationTest
-    integrationTestImplementation 'io.cucumber:cucumber-java8:7.11.0'
-    integrationTestImplementation 'io.cucumber:cucumber-spring:7.11.0'
-    integrationTestImplementation 'io.cucumber:cucumber-junit:7.11.0'
-    testImplementation 'io.cucumber:cucumber-core:7.11.0'
-    integrationTestImplementation 'com.github.madvirus:cucumber-tables:0.5.1'
+    testImplementation 'io.cucumber:cucumber-java8:7.11.0'
+    testImplementation 'io.cucumber:cucumber-spring:7.11.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.11.0'
+    testImplementation 'io.cucumber:cucumber-core:7.11.0' // <<  io.cucumber.core.cli.Main이 있는 모듈
+    testImplementation 'com.github.madvirus:cucumber-tables:0.5.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 }
+
 sourceSets {
     integrationTest {
         java {
@@ -62,25 +59,11 @@ sourceSets {
     }
 }
 
-task integrationTest(type: Test) {
+task cucumber(type: Test) {
     testClassesDirs = sourceSets.integrationTest.output.classesDirs
     classpath = sourceSets.integrationTest.runtimeClasspath
 }
 
 test {
     useJUnitPlatform()
-}
-
-task cucumber() {
-    dependsOn assemble, testClasses
-    javaexec {
-        main = "io.cucumber.core.cli.Main"
-        classpath = sourceSets.integrationTest.runtimeClasspath
-        args = [
-                '--glue', 'src/integrationTest/java/dreamdiary/features',
-                '--plugin', 'org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter',
-                '--features', 'src/integrationTest/resources'
-        ]
-
-    }
 }
