@@ -43,7 +43,6 @@ dependencies {
     testImplementation 'io.cucumber:cucumber-java8:7.11.0'
     testImplementation 'io.cucumber:cucumber-spring:7.11.0'
     testImplementation 'io.cucumber:cucumber-junit:7.11.0'
-    testImplementation 'io.cucumber:cucumber-core:7.11.0' // <<  io.cucumber.core.cli.Main이 있는 모듈
     testImplementation 'com.github.madvirus:cucumber-tables:0.5.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

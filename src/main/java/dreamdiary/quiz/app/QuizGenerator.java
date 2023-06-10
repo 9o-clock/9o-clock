@@ -20,7 +20,7 @@ class QuizGenerator {
                 .toArray(Choice[]::new);
 
         final Choices choices = new Choices(choiceArray);
-        final LocalDateTime releaseAt = LocalDateTime.now();
+        final LocalDateTime releaseAt = request.getReleaseAt();
 
         return Quiz.builder()
                 .title(title)
