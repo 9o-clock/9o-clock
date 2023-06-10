@@ -1,19 +1,17 @@
 package dreamdiary.quiz.app;
 
 import dreamdiary.quiz.domain.QuizException;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-class QuizAddServiceTest extends QuizTestSetUp {
+class QuizAddServiceTest extends QuizTestHelper {
     @InjectMocks
     private QuizAddService quizAddService;
 
@@ -25,8 +23,7 @@ class QuizAddServiceTest extends QuizTestSetUp {
         quizAddService.addQuiz(givenRequest);
 
         verify(mockQuizGenerator, times(1)).toQuiz(quizAddRequestCaptor.capture());
-        assertNotNull(quizAddRequestCaptor.getValue());
-        assertEquals(quizAddRequestCaptor.getValue(), givenRequest);
+        assertThat(quizAddRequestCaptor.getValue()).isNotNull();
     }
 
     @DisplayName("동일한 제목이 존재하면 예외처리")
@@ -37,8 +34,7 @@ class QuizAddServiceTest extends QuizTestSetUp {
 
         final QuizException exception = Assertions.assertThrows(QuizException.class, () ->
                 quizAddService.addQuiz(givenRequest));
-
-        assertEquals(exception.getMessage(), QuizException.duplicatedTitleExists().getMessage());
+        assertThat(exception.getMessage()).isEqualTo(QuizException.duplicatedTitleExists().getMessage());
     }
 
     @DisplayName("퀴즈 생성 성공 이벤트 발행")

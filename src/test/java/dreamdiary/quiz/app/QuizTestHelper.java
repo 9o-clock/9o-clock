@@ -9,18 +9,19 @@ import dreamdiary.quiz.domain.QuizTitle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.BDDMockito;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import static org.mockito.ArgumentMatchers.any;
+import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
-public class QuizTestSetUp {
+public class QuizTestHelper {
     @Mock
     protected QuizGenerator mockQuizGenerator;
     @Mock
@@ -34,8 +35,8 @@ public class QuizTestSetUp {
 
     @BeforeEach
     void setUp() {
-        BDDMockito.given(mockQuizGenerator.toQuiz(any())).willReturn(anQuiz().build());
-        BDDMockito.given(mockQuizRepository.isTitleAlreadyExists(any())).willReturn(false);
+        BDDMockito.lenient().when(mockQuizGenerator.toQuiz(any())).thenReturn(anQuiz().build());
+        BDDMockito.lenient().when(mockQuizRepository.isTitleAlreadyExists(any())).thenReturn(false);
     }
 
     protected Quiz.QuizBuilder anQuiz() {
@@ -45,5 +46,13 @@ public class QuizTestSetUp {
                 .choices(new Choices(new Choice("강아지"), new Choice("고양이")))
                 .releaseAt(LocalDateTime.now().plusDays(1L))
                 ;
+    }
+
+    protected QuizAddRequest.QuizAddRequestBuilder anQuizAddRequest() {
+        return QuizAddRequest.builder()
+                .title("givenTitle")
+                .content("givenContent")
+                .choices(List.of("A", "B", "C"))
+                .releaseAt(LocalDate.now().plusDays(5L).atTime(14, 0));
     }
 }
