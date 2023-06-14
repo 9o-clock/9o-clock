@@ -1,9 +1,10 @@
 
 package dreamdiary.quiz.app;
 
-import dreamdiary.quiz.domain.Quiz;
-import static org.assertj.core.api.Assertions.assertThat;
+import dreamdiary.quiz.domain.model.Quiz;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class QuizGeneratorTest extends QuizTestHelper {
     private final QuizGenerator quizGenerator = new QuizGenerator();

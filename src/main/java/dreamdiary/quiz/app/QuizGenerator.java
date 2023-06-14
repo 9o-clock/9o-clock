@@ -1,10 +1,6 @@
 package dreamdiary.quiz.app;
 
-import dreamdiary.quiz.domain.Choice;
-import dreamdiary.quiz.domain.Choices;
-import dreamdiary.quiz.domain.Quiz;
-import dreamdiary.quiz.domain.QuizContent;
-import dreamdiary.quiz.domain.QuizTitle;
+import dreamdiary.quiz.domain.model.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

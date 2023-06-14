@@ -1,9 +1,9 @@
 package dreamdiary.quiz.app;
 
-import dreamdiary.quiz.domain.Quiz;
-import dreamdiary.quiz.domain.QuizException;
 import dreamdiary.quiz.domain.QuizGeneratedEvent;
 import dreamdiary.quiz.domain.QuizRepository;
+import dreamdiary.quiz.domain.model.Quiz;
+import dreamdiary.quiz.domain.model.QuizException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

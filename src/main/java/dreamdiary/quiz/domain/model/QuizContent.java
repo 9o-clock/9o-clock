@@ -1,4 +1,4 @@
-package dreamdiary.quiz.domain;
+package dreamdiary.quiz.domain.model;
 
 import lombok.Getter;
 import org.springframework.util.StringUtils;

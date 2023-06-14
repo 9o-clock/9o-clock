@@ -1,16 +1,13 @@
 package dreamdiary.quiz.infra;
 
 import dreamdiary.quiz.app.QuizTestHelper;
-import dreamdiary.quiz.domain.Quiz;
-import dreamdiary.quiz.domain.QuizTitle;
-import static org.assertj.core.api.Assertions.assertThat;
+import dreamdiary.quiz.domain.model.Quiz;
+import dreamdiary.quiz.domain.model.QuizTitle;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
+import org.mockito.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
-import org.mockito.BDDMockito;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 

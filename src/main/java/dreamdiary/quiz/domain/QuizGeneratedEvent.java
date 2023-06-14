@@ -1,5 +1,6 @@
 package dreamdiary.quiz.domain;
 
+import dreamdiary.quiz.domain.model.Quiz;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

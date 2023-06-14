@@ -1,15 +1,10 @@
 package dreamdiary.quiz.app;
 
-import dreamdiary.quiz.domain.Choice;
-import dreamdiary.quiz.domain.Choices;
-import dreamdiary.quiz.domain.Quiz;
-import dreamdiary.quiz.domain.QuizContent;
 import dreamdiary.quiz.domain.QuizRepository;
-import dreamdiary.quiz.domain.QuizTitle;
+import dreamdiary.quiz.domain.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import static org.mockito.ArgumentMatchers.any;
 import org.mockito.BDDMockito;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -19,6 +14,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 public class QuizTestHelper {

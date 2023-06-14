@@ -1,8 +1,8 @@
 package dreamdiary.quiz.infra;
 
-import dreamdiary.quiz.domain.Quiz;
 import dreamdiary.quiz.domain.QuizRepository;
-import dreamdiary.quiz.domain.QuizTitle;
+import dreamdiary.quiz.domain.model.Quiz;
+import dreamdiary.quiz.domain.model.QuizTitle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

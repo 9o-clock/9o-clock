@@ -1,13 +1,14 @@
 package dreamdiary.quiz.app;
 
-import dreamdiary.quiz.domain.QuizException;
-import static org.assertj.core.api.Assertions.assertThat;
+import dreamdiary.quiz.domain.model.QuizException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.mockito.ArgumentMatchers.any;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
