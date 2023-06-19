@@ -17,7 +17,7 @@ class QuizAddService implements QuizAddUseCase {
 
     @Override
     public void addQuiz(final QuizAddRequest request) {
-        final Quiz quiz = quizGenerator.toQuiz(request);
+        final Quiz quiz = quizGenerator.generateQuiz(request);
         if (quizRepository.isTitleAlreadyExists(quiz.getTitle())) throw QuizException.duplicatedTitleExists();
         publisher.publishEvent(QuizGeneratedEvent.mapped(quiz));
     }

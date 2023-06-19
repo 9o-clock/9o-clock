@@ -1,14 +1,11 @@
 package dreamdiary.quiz.domain.model;
 
-import lombok.Getter;
 import org.springframework.util.StringUtils;
 
-@Getter
-public class QuizContent {
-    private final String value;
-
-    public QuizContent(final String value) {
+public record QuizContent(
+        String value
+) {
+    public QuizContent {
         if (!StringUtils.hasText(value)) throw QuizException.invalidFormat();
-        this.value = value;
     }
 }

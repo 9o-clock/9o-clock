@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 interface QuizEntityRepository extends JpaRepository<QuizEntity, Long> {
     boolean existsByTitle(final String title);
+    boolean existsByPublicId(final String publicId);
 }

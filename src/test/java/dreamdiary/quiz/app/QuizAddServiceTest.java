@@ -1,14 +1,13 @@
 package dreamdiary.quiz.app;
 
 import dreamdiary.quiz.domain.model.QuizException;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -23,7 +22,7 @@ class QuizAddServiceTest extends QuizTestHelper {
 
         quizAddService.addQuiz(givenRequest);
 
-        verify(mockQuizGenerator, times(1)).toQuiz(quizAddRequestCaptor.capture());
+        verify(mockQuizGenerator, times(1)).generateQuiz(quizAddRequestCaptor.capture());
         assertThat(quizAddRequestCaptor.getValue()).isNotNull();
     }
 

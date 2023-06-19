@@ -1,30 +1,37 @@
 package dreamdiary.quiz.app;
 
+import dreamdiary.quiz.domain.QuizRepository;
 import dreamdiary.quiz.domain.model.Choice;
 import dreamdiary.quiz.domain.model.Choices;
 import dreamdiary.quiz.domain.model.Quiz;
 import dreamdiary.quiz.domain.model.QuizContent;
+import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.domain.model.QuizTitle;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+@RequiredArgsConstructor
 @Component
 class QuizGenerator {
-    Quiz toQuiz(final QuizAddRequest request) {
-        // TODO 존재하지 않는 식별키를 달라고 port로 요청을 해야할지, 저장하면 아싸리 내부에서 그렇게 해야하는건지..
-        // TODO port는 단순 외부 자원을 활용하는 것이고, 식별값은 요구사항이니 여기서(app,domain 패키지) 시작해야는게 맞는 것 같음.
+    private final QuizRepository quizRepository;
+
+    Quiz generateQuiz(final QuizAddRequest request) {
         final QuizTitle title = new QuizTitle(request.getTitle());
         final QuizContent content = new QuizContent(request.getContent());
-        final Choice[] choiceArray = request.getChoices()
+        List<Choice> choiceList = request.getChoices()
                 .stream()
                 .map(Choice::new)
-                .toArray(Choice[]::new);
+                .toList();
 
-        final Choices choices = new Choices(choiceArray);
+        final Choices choices = new Choices(choiceList);
         final LocalDateTime releaseAt = request.getReleaseAt();
+        QuizPublicId quizPublicId = quizRepository.obtainQuizPublicId();
 
         return Quiz.builder()
+                .quizPublicId(quizPublicId)
                 .title(title)
                 .content(content)
                 .choices(choices)
