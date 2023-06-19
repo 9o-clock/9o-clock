@@ -58,6 +58,7 @@ class QuizEntity {
                 .map(ChoiceEntity::mapped)
                 .toList();
         return builder()
+                .publicId(quiz.getQuizPublicId().value())
                 .title(quiz.getTitle().value())
                 .content(quiz.getContent().value())
                 .choices(choiceEntities)

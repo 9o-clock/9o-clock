@@ -6,8 +6,8 @@ spring:
     include:
       - db
     group:
-      local: h2
       default: local
+      local: h2
       db: local
       dev: local
       prod:
