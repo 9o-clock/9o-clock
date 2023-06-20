@@ -4,6 +4,8 @@ import dreamdiary.quiz.domain.model.Quiz;
 import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.domain.model.QuizTitle;
 
+import java.util.Optional;
+
 public interface QuizRepository {
     /**
      * 동일한 퀴즈 명이 존재하는지 확인합니다.
@@ -24,4 +26,7 @@ public interface QuizRepository {
      * @return uniqId
      */
     QuizPublicId obtainQuizPublicId();
+
+    Optional<Quiz> findBy(QuizPublicId publicId);
+    Optional<Quiz> findBy(Long quizId);
 }

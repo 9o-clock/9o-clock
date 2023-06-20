@@ -17,4 +17,8 @@ public class QuizException extends RuntimeException {
     public static QuizException duplicatedTitleExists() {
         return new QuizException("동일한 퀴즈 제목이 존재합니다.");
     }
+
+    public static QuizException notFoundQuiz() {
+        return new QuizException("요청한 퀴즈를 찾을 수 없습니다.");
+    }
 }

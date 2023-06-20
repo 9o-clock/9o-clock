@@ -1,6 +1,7 @@
 package dreamdiary.quiz.helper;
 
 import dreamdiary.quiz.app.QuizAddRequest;
+import dreamdiary.quiz.app.QuizSubmitRequest;
 import dreamdiary.quiz.domain.QuizRepository;
 import dreamdiary.quiz.domain.model.Choice;
 import dreamdiary.quiz.domain.model.Choices;
@@ -20,6 +21,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -38,6 +40,7 @@ public abstract class QuizTestHelper {
     @BeforeEach
     void setUp() {
         Mockito.lenient().when(mockQuizRepository.isTitleAlreadyExists(any())).thenReturn(false);
+        Mockito.lenient().when(mockQuizRepository.findBy((QuizPublicId) any())).thenReturn(Optional.of(anQuiz().build()));
         Mockito.lenient().when(mockQuizRepository.obtainQuizPublicId()).thenReturn(new QuizPublicId(UUID.randomUUID().toString()));
 
     }
@@ -58,5 +61,10 @@ public abstract class QuizTestHelper {
                 .content("givenContent")
                 .choices(List.of("A", "B", "C"))
                 .releaseAt(LocalDate.now().plusDays(5L).atTime(14, 0));
+    }
+
+    protected QuizSubmitRequest.QuizSubmitRequestBuilder anQuizSubmitRequest() {
+        return QuizSubmitRequest.builder()
+                .choiceId(1L);
     }
 }
