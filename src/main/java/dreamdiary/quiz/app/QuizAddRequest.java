@@ -19,5 +19,7 @@ public class QuizAddRequest {
     private String content;
     private List<String> choices;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime releaseAt; // TODO 퀴즈 오픈 일시를 여기서 관리하는게 맞는지 의문.
+    private LocalDateTime releaseAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime answerReleaseAt;
 }

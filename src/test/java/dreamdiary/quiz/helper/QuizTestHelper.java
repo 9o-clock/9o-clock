@@ -19,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,12 +45,14 @@ public abstract class QuizTestHelper {
     }
 
     protected Quiz.QuizBuilder anQuiz() {
+        final LocalDate date = LocalDate.now().plusDays(5L);
         return Quiz.builder()
                 .quizPublicId(new QuizPublicId(UUID.randomUUID().toString()))
                 .title(new QuizTitle("Quiz Title"))
                 .content(new QuizContent("Quiz Content"))
                 .choices(new Choices(List.of(new Choice("강아지"), new Choice("고양이"))))
-                .releaseAt(LocalDateTime.now().plusDays(1L))
+                .releaseAt(date.atTime(14, 0))
+                .answerReleaseAt(date.atTime(16, 30))
                 ;
     }
 
@@ -60,11 +61,12 @@ public abstract class QuizTestHelper {
                 .title("givenTitle")
                 .content("givenContent")
                 .choices(List.of("A", "B", "C"))
-                .releaseAt(LocalDate.now().plusDays(5L).atTime(14, 0));
+                .releaseAt(LocalDate.now().plusDays(5L).atTime(14, 0))
+                .answerReleaseAt(LocalDate.now().plusDays(5L).atTime(16, 30));
     }
 
     protected QuizSubmitRequest.QuizSubmitRequestBuilder anQuizSubmitRequest() {
         return QuizSubmitRequest.builder()
-                .choiceId(1L);
+                .choiceId(UUID.randomUUID().toString());
     }
 }

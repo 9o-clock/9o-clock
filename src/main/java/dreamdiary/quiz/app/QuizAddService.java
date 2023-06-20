@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -38,7 +37,6 @@ class QuizAddService implements QuizAddUseCase {
                 .toList();
 
         final Choices choices = new Choices(choiceList);
-        final LocalDateTime releaseAt = request.getReleaseAt();
         QuizPublicId quizPublicId = quizRepository.obtainQuizPublicId();
 
         return Quiz.builder()
@@ -46,7 +44,8 @@ class QuizAddService implements QuizAddUseCase {
                 .title(title)
                 .content(content)
                 .choices(choices)
-                .releaseAt(releaseAt)
+                .releaseAt(request.getReleaseAt())
+                .answerReleaseAt(request.getAnswerReleaseAt())
                 .build();
     }
 }

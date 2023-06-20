@@ -43,6 +43,8 @@ class QuizEntity {
     private String content;
     @Column(name = "release_at", nullable = false)
     private LocalDateTime releaseAt;
+    @Column(name = "answer_release_at", nullable = false)
+    private LocalDateTime answerReleaseAt;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "quiz_id")
     private List<ChoiceEntity> choices;
@@ -63,6 +65,7 @@ class QuizEntity {
                 .content(quiz.getContent().value())
                 .choices(choiceEntities)
                 .releaseAt(quiz.getReleaseAt())
+                .answerReleaseAt(quiz.getAnswerReleaseAt())
                 .build();
     }
 }

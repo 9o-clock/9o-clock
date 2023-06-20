@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.UUID;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,13 +49,13 @@ class QuizSubmitApiTest {
     @Test
     void submitQuiz_passes_data_to_useCase() throws Exception {
         final String givenQuizPublicId = "quizPublicKey";
-        final Long givenChoiceId = 0L;
+        final String givenChoiceId = UUID.randomUUID().toString();
 
         mockMvc.perform(post("/quizzes/{quizPublicId}/submit", "quizPublicKey")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                         {
-                            "choiceId": %s
+                            "choiceId": "%s"
                         }
                         """.formatted(givenChoiceId)));
 
