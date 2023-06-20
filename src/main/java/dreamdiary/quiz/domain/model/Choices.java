@@ -7,6 +7,6 @@ public record Choices(
 ) {
     public Choices {
         if (null == values) throw QuizException.invalidFormat();
-        if (0 == values.size() || 4 < values.size()) throw QuizException.invalidFormat();
+        if (values.isEmpty() || 5 < values.size()) throw QuizException.invalidFormat();
     }
 }
