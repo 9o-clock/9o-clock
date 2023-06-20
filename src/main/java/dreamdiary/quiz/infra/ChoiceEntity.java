@@ -12,12 +12,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "quiz_choice")
+@Table(name = "QUIZ_CHOICE", indexes = {
+        @Index(name = "IDX_CHOICE_PUBLIC_ID", columnList = "public_id"),
+        @Index(name = "IDX_CHOICE_QUIZ_ID", columnList = "quiz_id")
+})
 @Entity
 @Getter
 class ChoiceEntity {

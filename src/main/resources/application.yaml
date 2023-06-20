@@ -11,3 +11,7 @@ spring:
       db: local
       dev: local
       prod:
+  redis:
+    host: test
+    port: 6379
+    password: password

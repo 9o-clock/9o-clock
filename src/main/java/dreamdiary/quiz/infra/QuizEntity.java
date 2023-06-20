@@ -28,7 +28,9 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "quiz", indexes = {@Index(name = "IDX_PUBLIC_ID", columnList = "public_id")})
+@Table(name = "QUIZ", indexes = {
+        @Index(name = "IDX_QUIZ_PUBLIC_ID", columnList = "public_id")
+})
 @Entity
 @Getter
 class QuizEntity {

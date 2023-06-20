@@ -39,6 +39,9 @@ dependencies {
     //h2 - local running
     runtimeOnly 'com.h2database:h2'
     testRuntimeOnly 'com.h2database:h2'
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
     // integrationTest
     integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
     integrationTestImplementation 'io.cucumber:cucumber-java8:7.11.0'

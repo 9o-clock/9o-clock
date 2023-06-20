@@ -48,6 +48,8 @@ class QuizAdaptor implements QuizRepository {
 
     @Override
     public void submit(final QuizSubmit quizSubmit) {
-
+        // member, 퀴즈, 선택지 조회
+        // TODO 해당 내용 중 quiz, choice는 여러 트랜젝션에서 불필요한 중복쿼리가 발생될텐데 이걸 캐시처리하는게 맞을 것 같다.
+        // TODO 2차캐시를 쓰던 Redis를 쓰던 해야할 것 같고, 제출 처리 과정이 복잡하니 추후 비동기로 빼기 위해 submit 호출을 이벤트로 변경해야겠다.
     }
 }

@@ -1,4 +1,4 @@
-package dreamdiary.support.config;
+package dreamdiary.support.jpa;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
