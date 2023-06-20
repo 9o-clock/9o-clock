@@ -18,6 +18,6 @@ class QuizSubmitService implements QuizSubmitUseCase {
         final QuizSubmit quizSubmit = quiz.submit(null, request.getChoiceId());
         quizRepository.submit(quizSubmit);
         // 정답 제출 이벤트 발생
-        // 퀴즈 제출 이력을 검사할 때 quizPublicId, choiceId 인덱스로 만들어두어야함.
+        // 퀴즈 제출 이력을 검사할 때 quizPublicId, choicePublicId 인덱스로 만들어두어야함.
     }
 }

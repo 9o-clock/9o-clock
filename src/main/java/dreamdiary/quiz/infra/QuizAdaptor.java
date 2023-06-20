@@ -11,6 +11,7 @@ import dreamdiary.support.cache.CacheStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -54,21 +55,19 @@ class QuizAdaptor implements QuizRepository {
     @Override
     public void submit(final QuizSubmit quizSubmit) {
         final CacheKey quizPublicIdCacheKey = new CacheKey(quizSubmit.quizPublicId().value());
-        Optional<Long> quizIdOpt = cacheStore.findData(quizPublicIdCacheKey);
-        if (quizIdOpt.isEmpty()) {
+        Map<Object, Object> choiceIdMap = cacheStore.findMap(quizPublicIdCacheKey);
+
+        if (choiceIdMap.isEmpty()) {
             final QuizEntity quizEntity = quizEntityRepository.findByPublicId(quizSubmit.quizPublicId().value())
                     .orElseThrow(QuizException::notFoundQuiz);
-            cacheStore.storeData(quizPublicIdCacheKey, quizEntity.getId(), 1L, TimeUnit.DAYS);
-
-            quizEntity.getChoices().stream()
-                    .map(choice -> new CacheKey(choice.getPublicId()))
-
             for (ChoiceEntity choice : quizEntity.getChoices()) {
-                cacheStore.storeData(new CacheKey(choice.getPublicId()), choice.getId(), 1L, TimeUnit.DAYS);
+                choiceIdMap.put(choice.getPublicId(), choice.getId());
             }
+            cacheStore.storeMap(quizPublicIdCacheKey, choiceIdMap, 1L, TimeUnit.DAYS);
         }
-        // member, 퀴즈, 선택지 조회
-        // TODO 해당 내용 중 quiz, choice는 여러 트랜젝션에서 불필요한 중복쿼리가 발생될텐데 이걸 캐시처리하는게 맞을 것 같다.
-        // TODO 2차캐시를 쓰던 Redis를 쓰던 해야할 것 같고, 제출 처리 과정이 복잡하니 추후 비동기로 빼기 위해 submit 호출을 이벤트로 변경해야겠다.
+
+        if (!choiceIdMap.containsKey(quizSubmit.choicePublicId())) throw QuizException.notFoundChoice();
+        final Long choiceId = (Long) choiceIdMap.get(quizSubmit.choicePublicId());
+        // submit 기록하기
     }
 }

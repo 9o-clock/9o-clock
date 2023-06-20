@@ -1,11 +1,13 @@
 package dreamdiary.support.redis;
 
+import dreamdiary.support.cache.CacheException;
 import dreamdiary.support.cache.CacheKey;
 import dreamdiary.support.cache.CacheStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +19,20 @@ class RedisStore implements CacheStore {
     @Override
     public void storeData(final CacheKey cacheKey, final Object data, final long timeout, final TimeUnit timeUnit) {
         redisTemplate.opsForValue().set(cacheKey, data, timeout, timeUnit);
+    }
+
+    @Override
+    public void storeMap(final CacheKey cacheKey, final Map<Object, Object> data, final long timeout, final TimeUnit timeUnit) {
+        if (null == data) throw CacheException.invalidFormat();
+        data.forEach((key, value) -> {
+            redisTemplate.opsForHash().put(cacheKey, key, value);
+        });
+        this.setExpire(cacheKey, timeout, timeUnit);
+    }
+
+    @Override
+    public Map<Object, Object> findMap(final CacheKey cacheKey) {
+        return redisTemplate.opsForHash().entries(cacheKey);
     }
 
     @Override
