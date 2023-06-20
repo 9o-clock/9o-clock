@@ -30,6 +30,7 @@ public class QuizAddWhenStep implements En {
                     .content(row.getString("content"))
                     .choices(choices)
                     .releaseAt(row.getLocalDateTime("releaseAt"))
+                    .answerReleaseAt(row.getLocalDateTime("answerReleaseAt"))
                     .build();
 
             quizAddUseCase.addQuiz(request);

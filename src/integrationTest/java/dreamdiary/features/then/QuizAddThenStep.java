@@ -36,6 +36,7 @@ public class QuizAddThenStep implements En {
                             s.assertThat(rowSet.getString(name)).describedAs(desc).isEqualTo(row.getString(name));
                             break;
                         case "release_at":
+                        case "answer_release_at":
                         case "created_at":
                         case "updated_at":
                             s.assertThat(rowSet.getTimestamp(name).toLocalDateTime()).describedAs(desc).isCloseTo(row.getLocalDateTime(name), new TemporalUnitWithinOffset(5, ChronoUnit.SECONDS));
