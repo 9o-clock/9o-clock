@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 class QuizAdaptor implements QuizRepository {
     private final QuizEntityRepository quizEntityRepository;
+    private final QuizSubmitRepository quizSubmitRepository;
     private final CacheStore cacheStore;
 
     @Override
@@ -65,9 +66,13 @@ class QuizAdaptor implements QuizRepository {
             }
             cacheStore.storeMap(quizPublicIdCacheKey, choiceIdMap, 1L, TimeUnit.DAYS);
         }
-
-        if (!choiceIdMap.containsKey(quizSubmit.choicePublicId())) throw QuizException.notFoundChoice();
+        // 발생하면 안되는 장애
+        if (!choiceIdMap.containsKey(quizSubmit.choicePublicId())) {
+            cacheStore.removeKey(quizPublicIdCacheKey);
+            throw QuizException.notFoundChoice();
+        }
         final Long choiceId = (Long) choiceIdMap.get(quizSubmit.choicePublicId());
+
         // submit 기록하기
     }
 }

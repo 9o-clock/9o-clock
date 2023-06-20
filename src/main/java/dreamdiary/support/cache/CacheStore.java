@@ -9,6 +9,6 @@ public interface CacheStore {
     void storeMap(final CacheKey cacheKey, final Map<Object, Object> data, final long timeout, final TimeUnit timeUnit);
     <T> Optional<T> findData(CacheKey cacheKey);
     Map<Object, Object> findMap(final CacheKey cacheKey);
-    Boolean removeData(CacheKey cacheKey);
+    Boolean removeKey(CacheKey cacheKey);
     Boolean setExpire(CacheKey cacheKey, long timeout, TimeUnit timeUnit);
 }

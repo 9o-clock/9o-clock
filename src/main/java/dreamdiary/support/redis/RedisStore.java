@@ -49,7 +49,7 @@ class RedisStore implements CacheStore {
     }
 
     @Override
-    public Boolean removeData(final CacheKey cacheKey) {
+    public Boolean removeKey(final CacheKey cacheKey) {
         return redisTemplate.delete(cacheKey);
     }
 
