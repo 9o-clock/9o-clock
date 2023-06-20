@@ -3,6 +3,7 @@ package dreamdiary.quiz.infra;
 import dreamdiary.quiz.domain.QuizRepository;
 import dreamdiary.quiz.domain.model.Quiz;
 import dreamdiary.quiz.domain.model.QuizPublicId;
+import dreamdiary.quiz.domain.model.QuizSubmit;
 import dreamdiary.quiz.domain.model.QuizTitle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -43,5 +44,10 @@ class QuizAdaptor implements QuizRepository {
     @Override
     public Optional<Quiz> findBy(final Long quizId) {
         return Optional.empty();
+    }
+
+    @Override
+    public void submit(final QuizSubmit quizSubmit) {
+
     }
 }

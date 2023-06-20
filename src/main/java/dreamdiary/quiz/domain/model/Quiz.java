@@ -2,8 +2,10 @@ package dreamdiary.quiz.domain.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 public class Quiz {
@@ -27,5 +29,10 @@ public class Quiz {
         this.answerReleaseAt = answerReleaseAt;
     }
 
-
+    public QuizSubmit submit(final String memberId, final String choiceId) {
+        if (!StringUtils.hasText(choiceId)) throw QuizException.invalidFormat();
+        if (this.choices.values().stream().filter(choice -> Objects.equals(choice.id(), choiceId)).findFirst().isEmpty()) throw QuizException.notFoundChoice();
+        if (this.releaseAt.isAfter(LocalDateTime.now())) throw QuizException.notSubmitAt();
+        return new QuizSubmit(this.quizPublicId, memberId, choiceId);
+    }
 }

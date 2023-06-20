@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "quiz_choice")
 @Entity
 @Getter
-public class ChoiceEntity {
+class ChoiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

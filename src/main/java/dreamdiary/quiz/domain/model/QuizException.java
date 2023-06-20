@@ -21,4 +21,12 @@ public class QuizException extends RuntimeException {
     public static QuizException notFoundQuiz() {
         return new QuizException("요청한 퀴즈를 찾을 수 없습니다.");
     }
+
+    public static QuizException notFoundChoice() {
+        return new QuizException("요청한 정답을 찾을 수 없습니다.");
+    }
+
+    public static QuizException notSubmitAt() {
+        return new QuizException("정답 제출이 가능한 일자가 아닙니다.");
+    }
 }

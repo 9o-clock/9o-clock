@@ -2,6 +2,7 @@ package dreamdiary.quiz.domain;
 
 import dreamdiary.quiz.domain.model.Quiz;
 import dreamdiary.quiz.domain.model.QuizPublicId;
+import dreamdiary.quiz.domain.model.QuizSubmit;
 import dreamdiary.quiz.domain.model.QuizTitle;
 
 import java.util.Optional;
@@ -29,4 +30,6 @@ public interface QuizRepository {
 
     Optional<Quiz> findBy(QuizPublicId publicId);
     Optional<Quiz> findBy(Long quizId);
+
+    void submit(QuizSubmit quizSubmit);
 }
