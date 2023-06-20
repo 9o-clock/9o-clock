@@ -2,23 +2,51 @@ package dreamdiary.quiz.app;
 
 import dreamdiary.quiz.domain.QuizGeneratedEvent;
 import dreamdiary.quiz.domain.QuizRepository;
+import dreamdiary.quiz.domain.model.Choice;
+import dreamdiary.quiz.domain.model.Choices;
 import dreamdiary.quiz.domain.model.Quiz;
+import dreamdiary.quiz.domain.model.QuizContent;
 import dreamdiary.quiz.domain.model.QuizException;
+import dreamdiary.quiz.domain.model.QuizPublicId;
+import dreamdiary.quiz.domain.model.QuizTitle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 class QuizAddService implements QuizAddUseCase {
-    private final QuizGenerator quizGenerator;
     private final QuizRepository quizRepository;
     private final ApplicationEventPublisher publisher;
 
     @Override
     public void addQuiz(final QuizAddRequest request) {
-        final Quiz quiz = quizGenerator.generateQuiz(request);
+        final Quiz quiz = generateQuiz(request);
         if (quizRepository.isTitleAlreadyExists(quiz.getTitle())) throw QuizException.duplicatedTitleExists();
         publisher.publishEvent(QuizGeneratedEvent.mapped(quiz));
+    }
+
+    private Quiz generateQuiz(final QuizAddRequest request) {
+        final QuizTitle title = new QuizTitle(request.getTitle());
+        final QuizContent content = new QuizContent(request.getContent());
+        List<Choice> choiceList = request.getChoices()
+                .stream()
+                .map(Choice::new)
+                .toList();
+
+        final Choices choices = new Choices(choiceList);
+        final LocalDateTime releaseAt = request.getReleaseAt();
+        QuizPublicId quizPublicId = quizRepository.obtainQuizPublicId();
+
+        return Quiz.builder()
+                .quizPublicId(quizPublicId)
+                .title(title)
+                .content(content)
+                .choices(choices)
+                .releaseAt(releaseAt)
+                .build();
     }
 }

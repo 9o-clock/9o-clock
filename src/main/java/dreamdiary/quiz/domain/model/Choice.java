@@ -3,9 +3,9 @@ package dreamdiary.quiz.domain.model;
 import org.springframework.util.StringUtils;
 
 public record Choice(
-        String text
+        String value
 ) {
     public Choice {
-        if (!StringUtils.hasText(text) || 10 < text.length()) throw QuizException.invalidFormat();
+        if (!StringUtils.hasText(value) || 10 < value.length()) throw QuizException.invalidFormat();
     }
 }

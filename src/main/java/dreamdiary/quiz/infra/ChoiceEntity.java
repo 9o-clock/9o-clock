@@ -27,7 +27,7 @@ public class ChoiceEntity {
 
     public static ChoiceEntity mapped(final Choice choice) {
         return builder()
-                .text(choice.text())
+                .text(choice.value())
                 .build();
     }
 }

@@ -29,14 +29,8 @@ class QuizAdaptor implements QuizRepository {
 
     @Override
     public QuizPublicId obtainQuizPublicId() {
-        int retryCount = 0;
-        while (retryCount < 15) {
-            retryCount++;
-            UUID uuid = UUID.randomUUID();
-            if (!quizEntityRepository.existsByPublicId(uuid.toString())) {
-                return new QuizPublicId(uuid.toString());
-            }
-        }
-        throw new RuntimeException(); // 시스템 장애인데 이거 이따구 구현 맞어? ㅋㅋ...
+        // TODO sha256도 길이 상 해시 중복이 발생할 수는 있지만, 그래도 UUID노출보단 나을듯
+        // current timestamp 를 섞자
+        return new QuizPublicId(UUID.randomUUID().toString());
     }
 }

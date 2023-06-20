@@ -1,5 +1,6 @@
-package dreamdiary.quiz.app;
+package dreamdiary.quiz.helper;
 
+import dreamdiary.quiz.app.QuizAddRequest;
 import dreamdiary.quiz.domain.QuizRepository;
 import dreamdiary.quiz.domain.model.Choice;
 import dreamdiary.quiz.domain.model.Choices;
@@ -10,10 +11,9 @@ import dreamdiary.quiz.domain.model.QuizTitle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import static org.mockito.ArgumentMatchers.any;
-import org.mockito.BDDMockito;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
@@ -22,10 +22,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @ExtendWith(MockitoExtension.class)
-public class QuizTestHelper {
-    @Mock
-    protected QuizGenerator mockQuizGenerator;
+public abstract class QuizTestHelper {
     @Mock
     protected QuizRepository mockQuizRepository;
     @Mock
@@ -37,9 +37,8 @@ public class QuizTestHelper {
 
     @BeforeEach
     void setUp() {
-        BDDMockito.lenient().when(mockQuizGenerator.generateQuiz(any())).thenReturn(anQuiz().build());
-        BDDMockito.lenient().when(mockQuizRepository.isTitleAlreadyExists(any())).thenReturn(false);
-        BDDMockito.lenient().when(mockQuizRepository.obtainQuizPublicId()).thenReturn(new QuizPublicId(UUID.randomUUID().toString()));
+        Mockito.lenient().when(mockQuizRepository.isTitleAlreadyExists(any())).thenReturn(false);
+        Mockito.lenient().when(mockQuizRepository.obtainQuizPublicId()).thenReturn(new QuizPublicId(UUID.randomUUID().toString()));
 
     }
 
