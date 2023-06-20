@@ -2,6 +2,7 @@ package dreamdiary.quiz.infra;
 
 import dreamdiary.quiz.domain.QuizRepository;
 import dreamdiary.quiz.domain.model.Quiz;
+import dreamdiary.quiz.domain.model.QuizException;
 import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.domain.model.QuizSubmit;
 import dreamdiary.quiz.domain.model.QuizTitle;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 @Component
@@ -51,12 +53,19 @@ class QuizAdaptor implements QuizRepository {
 
     @Override
     public void submit(final QuizSubmit quizSubmit) {
-        Optional<Object> quizIdOpt = cacheStore.findData(new CacheKey(quizSubmit.quizId().value()));
+        final CacheKey quizPublicIdCacheKey = new CacheKey(quizSubmit.quizPublicId().value());
+        Optional<Long> quizIdOpt = cacheStore.findData(quizPublicIdCacheKey);
         if (quizIdOpt.isEmpty()) {
-            // 퀴즈 객체 조회
-            // 없으면 예외처리
-            // cache 처리
-            // quizIdOpt 값 덮어쓰기
+            final QuizEntity quizEntity = quizEntityRepository.findByPublicId(quizSubmit.quizPublicId().value())
+                    .orElseThrow(QuizException::notFoundQuiz);
+            cacheStore.storeData(quizPublicIdCacheKey, quizEntity.getId(), 1L, TimeUnit.DAYS);
+
+            quizEntity.getChoices().stream()
+                    .map(choice -> new CacheKey(choice.getPublicId()))
+
+            for (ChoiceEntity choice : quizEntity.getChoices()) {
+                cacheStore.storeData(new CacheKey(choice.getPublicId()), choice.getId(), 1L, TimeUnit.DAYS);
+            }
         }
         // member, 퀴즈, 선택지 조회
         // TODO 해당 내용 중 quiz, choice는 여러 트랜젝션에서 불필요한 중복쿼리가 발생될텐데 이걸 캐시처리하는게 맞을 것 같다.
