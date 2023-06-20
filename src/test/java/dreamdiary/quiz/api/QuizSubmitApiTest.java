@@ -27,7 +27,9 @@ class QuizSubmitApiTest {
     private QuizSubmitUseCase mockQuizSubmitUseCase;
     private MockMvc mockMvc;
     @Captor
-    private ArgumentCaptor<QuizSubmitRequest> captor;
+    private ArgumentCaptor<String> quizIdCaptor;
+    @Captor
+    private ArgumentCaptor<QuizSubmitRequest> requestCaptor;
 
     @BeforeEach
     void setUp() {
@@ -36,7 +38,7 @@ class QuizSubmitApiTest {
 
     @Test
     void submitQuiz_status_is_ok() throws Exception {
-        mockMvc.perform(post("/quizzes/{quizId}/submit", "quizPublicKey")
+        mockMvc.perform(post("/quizzes/{quizPublicId}/submit", "quizPublicKey")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isOk());
@@ -44,8 +46,10 @@ class QuizSubmitApiTest {
 
     @Test
     void submitQuiz_passes_data_to_useCase() throws Exception {
+        final String givenQuizPublicId = "quizPublicKey";
         final Long givenChoiceId = 0L;
-        mockMvc.perform(post("/quizzes/{quizId}/submit", "quizPublicKey")
+
+        mockMvc.perform(post("/quizzes/{quizPublicId}/submit", "quizPublicKey")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                         {
@@ -53,6 +57,6 @@ class QuizSubmitApiTest {
                         }
                         """.formatted(givenChoiceId)));
 
-        verify(mockQuizSubmitUseCase, times(1)).submitQuiz(captor.capture());
+        verify(mockQuizSubmitUseCase, times(1)).submitQuiz(quizIdCaptor.capture(), requestCaptor.capture());
     }
 }

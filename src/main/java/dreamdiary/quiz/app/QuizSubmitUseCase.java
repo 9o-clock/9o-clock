@@ -1,5 +1,5 @@
 package dreamdiary.quiz.app;
 
 public interface QuizSubmitUseCase {
-    void submitQuiz(QuizSubmitRequest request);
+    void submitQuiz(final String quizPublicId, QuizSubmitRequest request);
 }
