@@ -1,5 +1,6 @@
 package dreamdiary.support.redis;
 
+import dreamdiary.support.cache.CacheKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
@@ -9,11 +10,9 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.io.Serializable;
-
 @ConditionalOnBean(EmbeddedRedisConfig.class)
 @Configuration
-public class RedisConfig {
+class RedisConfig {
 
     @Value("${spring.redis.host}")
     public String redisHost;
@@ -34,8 +33,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, RedisData<? extends Serializable>> redisTemplate() {
-        RedisTemplate<String, RedisData<? extends Serializable>> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<CacheKey, Object> redisTemplate() {
+        RedisTemplate<CacheKey, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }

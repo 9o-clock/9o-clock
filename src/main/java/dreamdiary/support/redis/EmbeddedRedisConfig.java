@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Profile("local")
 @Configuration
-public class EmbeddedRedisConfig {
+class EmbeddedRedisConfig {
     @Value("${spring.redis.port}")
     private int redisPort;
 

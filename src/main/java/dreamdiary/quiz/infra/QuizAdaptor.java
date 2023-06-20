@@ -5,6 +5,8 @@ import dreamdiary.quiz.domain.model.Quiz;
 import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.domain.model.QuizSubmit;
 import dreamdiary.quiz.domain.model.QuizTitle;
+import dreamdiary.support.cache.CacheKey;
+import dreamdiary.support.cache.CacheStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,7 @@ import java.util.UUID;
 @Component
 class QuizAdaptor implements QuizRepository {
     private final QuizEntityRepository quizEntityRepository;
+    private final CacheStore cacheStore;
 
     @Override
     public boolean isTitleAlreadyExists(final QuizTitle title) {
@@ -48,6 +51,13 @@ class QuizAdaptor implements QuizRepository {
 
     @Override
     public void submit(final QuizSubmit quizSubmit) {
+        Optional<Object> quizIdOpt = cacheStore.findData(new CacheKey(quizSubmit.quizId().value()));
+        if (quizIdOpt.isEmpty()) {
+            // 퀴즈 객체 조회
+            // 없으면 예외처리
+            // cache 처리
+            // quizIdOpt 값 덮어쓰기
+        }
         // member, 퀴즈, 선택지 조회
         // TODO 해당 내용 중 quiz, choice는 여러 트랜젝션에서 불필요한 중복쿼리가 발생될텐데 이걸 캐시처리하는게 맞을 것 같다.
         // TODO 2차캐시를 쓰던 Redis를 쓰던 해야할 것 같고, 제출 처리 과정이 복잡하니 추후 비동기로 빼기 위해 submit 호출을 이벤트로 변경해야겠다.
