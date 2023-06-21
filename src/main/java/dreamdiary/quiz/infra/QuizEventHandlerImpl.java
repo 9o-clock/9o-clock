@@ -6,6 +6,7 @@ import dreamdiary.quiz.domain.event.QuizGeneratedEvent;
 import dreamdiary.quiz.domain.event.QuizSubmitGeneratedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -13,12 +14,14 @@ import org.springframework.stereotype.Component;
 class QuizEventHandlerImpl implements QuizEventHandler {
     private final QuizRepository quizRepository;
 
+    @Async
     @EventListener(QuizGeneratedEvent.class)
     @Override
     public void handle(final QuizGeneratedEvent event) {
         quizRepository.store(event.quiz());
     }
 
+    @Async
     @EventListener(QuizSubmitGeneratedEvent.class)
     @Override
     public void handle(final QuizSubmitGeneratedEvent event) {

@@ -41,8 +41,6 @@ class QuizAdaptor implements QuizRepository {
 
     @Override
     public QuizPublicId obtainQuizPublicId() {
-        // TODO sha256도 길이 상 해시 중복이 발생할 수는 있지만, 그래도 UUID노출보단 나을듯
-        // current timestamp 를 섞자
         return new QuizPublicId(Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8)));
     }
 
