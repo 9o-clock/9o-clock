@@ -34,7 +34,7 @@ class EmbeddedRedisConfig {
     }
 
     private boolean isArmMac() {
-        return Objects.equals(System.getProperty("os.arch"), "aarch64") &&
+        return Objects.equals(System.getProperty("os.arch"), "arch64") &&
                 Objects.equals(System.getProperty("os.name"), "Mac OS X");
     }
 }
