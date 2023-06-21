@@ -29,10 +29,10 @@ public class Quiz {
         this.answerReleaseAt = answerReleaseAt;
     }
 
-    public QuizSubmit submit(final String memberId, final String choiceId) {
-        if (!StringUtils.hasText(choiceId)) throw QuizException.invalidFormat();
-        if (this.choices.values().stream().filter(choice -> Objects.equals(choice.id(), choiceId)).findFirst().isEmpty()) throw QuizException.notFoundChoice();
+    public QuizSubmit submit(final String memberId, final String choicePublicId) {
+        if (!StringUtils.hasText(choicePublicId)) throw QuizException.invalidFormat();
+        if (this.choices.values().stream().filter(choice -> Objects.equals(choice.publicId(), choicePublicId)).findFirst().isEmpty()) throw QuizException.notFoundChoice();
         if (this.releaseAt.isAfter(LocalDateTime.now())) throw QuizException.notSubmitAt();
-        return new QuizSubmit(this.quizPublicId, memberId, choiceId);
+        return new QuizSubmit(this.quizPublicId, memberId, choicePublicId);
     }
 }

@@ -1,5 +1,6 @@
 package dreamdiary.quiz.app;
 
+import dreamdiary.quiz.domain.event.QuizSubmitGeneratedEvent;
 import dreamdiary.quiz.domain.model.QuizException;
 import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.helper.QuizTestHelper;
@@ -13,6 +14,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class QuizSubmitServiceTest extends QuizTestHelper {
     @InjectMocks
@@ -30,5 +33,16 @@ class QuizSubmitServiceTest extends QuizTestHelper {
                 QuizException.class);
 
         assertThat(exception.getMessage()).isEqualTo(QuizException.notFoundQuiz().getMessage());
+    }
+
+    @Test
+    void submitQuiz_publish_quiz_submit_generated_event() {
+        final QuizSubmitRequest givenRequest = anQuizSubmitRequest().build();
+
+        quizSubmitService.submitQuiz("givenQuizPublicId", givenRequest);
+
+        verify(mockPublisher, times(1)).publishEvent(publishEventCaptor.capture());
+        assertThat(publishEventCaptor.getValue()).isNotNull();
+        final QuizSubmitGeneratedEvent event = (QuizSubmitGeneratedEvent) publishEventCaptor.getValue();
     }
 }

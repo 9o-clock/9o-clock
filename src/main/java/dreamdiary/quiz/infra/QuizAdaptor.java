@@ -11,6 +11,9 @@ import dreamdiary.support.cache.CacheStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,12 +43,13 @@ class QuizAdaptor implements QuizRepository {
     public QuizPublicId obtainQuizPublicId() {
         // TODO sha256도 길이 상 해시 중복이 발생할 수는 있지만, 그래도 UUID노출보단 나을듯
         // current timestamp 를 섞자
-        return new QuizPublicId(UUID.randomUUID().toString());
+        return new QuizPublicId(Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8)));
     }
 
     @Override
     public Optional<Quiz> findBy(final QuizPublicId publicId) {
-        return Optional.empty();
+        final Optional<QuizEntity> quizEntityOpt = quizEntityRepository.findByPublicId(publicId.value());
+        return quizEntityOpt.map(QuizEntity::toQuiz);
     }
 
     @Override
@@ -53,26 +57,32 @@ class QuizAdaptor implements QuizRepository {
         return Optional.empty();
     }
 
+    @Transactional
     @Override
     public void submit(final QuizSubmit quizSubmit) {
         final CacheKey quizPublicIdCacheKey = new CacheKey(quizSubmit.quizPublicId().value());
-        Map<Object, Object> choiceIdMap = cacheStore.findMap(quizPublicIdCacheKey);
+        Map<Object, Object> quizArgsIdMap = cacheStore.findMap(quizPublicIdCacheKey);
 
-        if (choiceIdMap.isEmpty()) {
+        if (quizArgsIdMap.isEmpty()) {
             final QuizEntity quizEntity = quizEntityRepository.findByPublicId(quizSubmit.quizPublicId().value())
                     .orElseThrow(QuizException::notFoundQuiz);
+            quizArgsIdMap.put(quizSubmit.quizPublicId().value(), quizEntity.getId());
             for (ChoiceEntity choice : quizEntity.getChoices()) {
-                choiceIdMap.put(choice.getPublicId(), choice.getId());
+                quizArgsIdMap.put(choice.getPublicId(), choice.getId());
             }
-            cacheStore.storeMap(quizPublicIdCacheKey, choiceIdMap, 1L, TimeUnit.DAYS);
+            cacheStore.storeMap(quizPublicIdCacheKey, quizArgsIdMap, 1L, TimeUnit.DAYS);
         }
         // 발생하면 안되는 장애
-        if (!choiceIdMap.containsKey(quizSubmit.choicePublicId())) {
+        if (!quizArgsIdMap.containsKey(quizSubmit.choicePublicId())) {
             cacheStore.removeKey(quizPublicIdCacheKey);
             throw QuizException.notFoundChoice();
         }
-        final Long choiceId = (Long) choiceIdMap.get(quizSubmit.choicePublicId());
+        final Long choiceId = (Long) quizArgsIdMap.get(quizSubmit.choicePublicId());
+        final Long quizId = (Long) quizArgsIdMap.get(quizSubmit.quizPublicId().value());
 
-        // submit 기록하기
+        final QuizSubmitEntity quizSubmitEntity = new QuizSubmitEntity(quizId, 1L, choiceId);
+
+        quizSubmitRepository.insertQuizSubmitEntity(quizSubmitEntity.getQuizId(), quizSubmitEntity.getMemberId(),
+                quizSubmitEntity.getChoiceId(), quizSubmitEntity.getCreatedAt(), quizSubmitEntity.getUpdatedAt());
     }
 }

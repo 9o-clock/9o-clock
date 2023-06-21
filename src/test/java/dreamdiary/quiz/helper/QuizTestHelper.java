@@ -45,12 +45,12 @@ public abstract class QuizTestHelper {
     }
 
     protected Quiz.QuizBuilder anQuiz() {
-        final LocalDate date = LocalDate.now().plusDays(5L);
+        final LocalDate date = LocalDate.now().minusDays(1L);
         return Quiz.builder()
                 .quizPublicId(new QuizPublicId(UUID.randomUUID().toString()))
                 .title(new QuizTitle("Quiz Title"))
                 .content(new QuizContent("Quiz Content"))
-                .choices(new Choices(List.of(new Choice("강아지"), new Choice("고양이"))))
+                .choices(new Choices(List.of(new Choice("CHOICE_UNIQ_ID", "강아지"), new Choice("고양이"))))
                 .releaseAt(date.atTime(14, 0))
                 .answerReleaseAt(date.atTime(16, 30))
                 ;
@@ -67,6 +67,6 @@ public abstract class QuizTestHelper {
 
     protected QuizSubmitRequest.QuizSubmitRequestBuilder anQuizSubmitRequest() {
         return QuizSubmitRequest.builder()
-                .choiceId(UUID.randomUUID().toString());
+                .choicePublicId("CHOICE_UNIQ_ID");
     }
 }

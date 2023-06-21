@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,8 +20,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "QUIZ_SUBMIT", indexes = {
+        @Index(name = "IDX_QUIZ_SUBMIT_QUIZ_ID_MEMBER_ID", columnList = "quiz_id,member_id"),
         @Index(name = "IDX_QUIZ_SUBMIT_MEMBER_ID", columnList = "member_id"),
-        @Index(name = "IDX_QUIZ_SUBMIT_QUIZ_ID", columnList = "quiz_id"),
         @Index(name = "IDX_QUIZ_SUBMIT_CHOICE_ID", columnList = "choice_id")
 })
 @Entity
@@ -32,23 +30,23 @@ class QuizSubmitEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "member_id", nullable = false)
-    private Long memberId;
     @Column(name = "quiz_id", nullable = false)
     private Long quizId;
+    @Column(name = "member_id", nullable = false)
+    private Long memberId;
     @Column(name = "choice_id", nullable = false)
     private Long choiceId;
-    @CreatedDate
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
-    @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    QuizSubmitEntity(final Long memberId, final Long quizId, final Long choiceId) {
-        if (null == memberId || null == quizId || null == choiceId) throw QuizException.invalidFormat();
-        this.memberId = memberId;
+    QuizSubmitEntity(final Long quizId, final Long memberId, final Long choiceId) {
+        if (null == quizId || null == memberId || null == choiceId) throw QuizException.invalidFormat();
         this.quizId = quizId;
+        this.memberId = memberId;
         this.choiceId = choiceId;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
     }
 }

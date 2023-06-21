@@ -1,7 +1,7 @@
 package dreamdiary.quiz.app;
 
-import dreamdiary.quiz.domain.QuizGeneratedEvent;
 import dreamdiary.quiz.domain.QuizRepository;
+import dreamdiary.quiz.domain.event.QuizGeneratedEvent;
 import dreamdiary.quiz.domain.model.Choice;
 import dreamdiary.quiz.domain.model.Choices;
 import dreamdiary.quiz.domain.model.Quiz;

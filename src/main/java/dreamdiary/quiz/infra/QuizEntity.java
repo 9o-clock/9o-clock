@@ -1,6 +1,11 @@
 package dreamdiary.quiz.infra;
 
+import dreamdiary.quiz.domain.model.Choice;
+import dreamdiary.quiz.domain.model.Choices;
 import dreamdiary.quiz.domain.model.Quiz;
+import dreamdiary.quiz.domain.model.QuizContent;
+import dreamdiary.quiz.domain.model.QuizPublicId;
+import dreamdiary.quiz.domain.model.QuizTitle;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -68,6 +73,18 @@ class QuizEntity {
                 .choices(choiceEntities)
                 .releaseAt(quiz.getReleaseAt())
                 .answerReleaseAt(quiz.getAnswerReleaseAt())
+                .build();
+    }
+
+    public Quiz toQuiz() {
+        final List<Choice> choiceList = choices.stream().map(e -> new Choice(e.getPublicId(), e.getText())).toList();
+        return Quiz.builder()
+                .quizPublicId(new QuizPublicId(this.publicId))
+                .title(new QuizTitle(this.title))
+                .content(new QuizContent(this.content))
+                .choices(new Choices(choiceList))
+                .releaseAt(this.releaseAt)
+                .answerReleaseAt(this.answerReleaseAt)
                 .build();
     }
 }

@@ -1,6 +1,6 @@
 package dreamdiary.quiz.app;
 
-import dreamdiary.quiz.domain.QuizGeneratedEvent;
+import dreamdiary.quiz.domain.event.QuizGeneratedEvent;
 import dreamdiary.quiz.domain.model.Choice;
 import dreamdiary.quiz.domain.model.QuizException;
 import dreamdiary.quiz.domain.model.QuizPublicId;
@@ -53,13 +53,13 @@ class QuizAddServiceTest extends QuizTestHelper {
         verify(mockPublisher, times(1)).publishEvent(publishEventCaptor.capture());
         assertThat(publishEventCaptor.getValue()).isNotNull();
         final QuizGeneratedEvent event = (QuizGeneratedEvent) publishEventCaptor.getValue();
-        assertThat(event.getQuiz().getTitle().value()).isEqualTo(givenRequest.getTitle());
-        assertThat(event.getQuiz().getContent().value()).isEqualTo(givenRequest.getContent());
-        assertThat(event.getQuiz().getReleaseAt()).isEqualTo(givenRequest.getReleaseAt());
-        assertThat(event.getQuiz().getQuizPublicId().value()).isEqualTo(givenObtainId);
+        assertThat(event.quiz().getTitle().value()).isEqualTo(givenRequest.getTitle());
+        assertThat(event.quiz().getContent().value()).isEqualTo(givenRequest.getContent());
+        assertThat(event.quiz().getReleaseAt()).isEqualTo(givenRequest.getReleaseAt());
+        assertThat(event.quiz().getQuizPublicId().value()).isEqualTo(givenObtainId);
 
         int i = 0;
-        for (final Choice choice : event.getQuiz().getChoices().values()) {
+        for (final Choice choice : event.quiz().getChoices().values()) {
             assertThat(choice.value()).isEqualTo(givenRequest.getChoices().get(i));
             i++;
         }

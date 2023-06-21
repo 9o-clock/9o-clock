@@ -2,9 +2,9 @@ package dreamdiary.support.cache;
 
 import org.springframework.util.StringUtils;
 
-public record CacheKey(
-        String value
-) {
+import java.io.Serializable;
+
+public record CacheKey(String value) implements Serializable {
     public CacheKey {
         if (!StringUtils.hasText(value)) throw CacheException.invalidFormat();
     }

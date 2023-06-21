@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class QuizSubmitRequest {
-    private String choiceId;
+    private String choicePublicId;
 }

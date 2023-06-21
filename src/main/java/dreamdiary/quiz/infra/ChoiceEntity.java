@@ -35,7 +35,7 @@ class ChoiceEntity {
     public static ChoiceEntity mapped(final Choice choice) {
         return builder()
                 .text(choice.value())
-                .publicId(choice.id())
+                .publicId(choice.publicId())
                 .build();
     }
 }
