@@ -46,13 +46,13 @@ class QuizAdaptor implements QuizRepository {
 
     @Override
     public Optional<Quiz> findBy(final QuizPublicId publicId) {
-        final Optional<QuizEntity> quizEntityOpt = quizEntityRepository.findByPublicId(publicId.value());
+        final Optional<QuizEntity> quizEntityOpt = quizEntityRepository.findByPublicId(publicId);
         return quizEntityOpt.map(QuizEntity::toQuiz);
     }
 
     @Override
     public Optional<Quiz> findBy(final Long quizId) {
-        return Optional.empty();
+        return quizEntityRepository.findById(quizId).map(QuizEntity::toQuiz);
     }
 
     @Transactional
@@ -62,7 +62,7 @@ class QuizAdaptor implements QuizRepository {
         Map<Object, Object> quizArgsIdMap = cacheStore.findMap(quizPublicIdCacheKey);
 
         if (quizArgsIdMap.isEmpty()) {
-            final QuizEntity quizEntity = quizEntityRepository.findByPublicId(quizSubmit.quizPublicId().value())
+            final QuizEntity quizEntity = quizEntityRepository.findByPublicId(quizSubmit.quizPublicId())
                     .orElseThrow(QuizException::notFoundQuiz);
             quizArgsIdMap.put(quizSubmit.quizPublicId().value(), quizEntity.getId());
             for (ChoiceEntity choice : quizEntity.getChoices()) {
