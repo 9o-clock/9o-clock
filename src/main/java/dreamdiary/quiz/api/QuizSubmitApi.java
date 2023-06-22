@@ -14,7 +14,8 @@ class QuizSubmitApi {
     private final QuizSubmitUseCase quizSubmitUseCase;
 
     @PostMapping("quizzes/{quizPublicId}/submit")
-    void submitQuiz(@PathVariable String quizPublicId, @RequestBody QuizSubmitRequest request) {
+    void submitQuiz(@PathVariable String quizPublicId,
+                    @RequestBody QuizSubmitRequest request) {
         quizSubmitUseCase.submitQuiz(quizPublicId, request);
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -42,8 +43,9 @@ class QuizEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Convert(converter = QuizPublicIdConverter.class)
     @Column(name = "public_id", nullable = false, unique = true)
-    private String publicId;
+    private QuizPublicId publicId;
     @Column(name = "title", nullable = false, unique = true)
     private String title;
     @Column(name = "content", nullable = false)
@@ -67,7 +69,7 @@ class QuizEntity {
                 .map(ChoiceEntity::mapped)
                 .toList();
         return builder()
-                .publicId(quiz.getQuizPublicId().value())
+                .publicId(quiz.getQuizPublicId())
                 .title(quiz.getTitle().value())
                 .content(quiz.getContent().value())
                 .choices(choiceEntities)
@@ -79,7 +81,7 @@ class QuizEntity {
     public Quiz toQuiz() {
         final List<Choice> choiceList = choices.stream().map(e -> new Choice(e.getPublicId(), e.getText())).toList();
         return Quiz.builder()
-                .quizPublicId(new QuizPublicId(this.publicId))
+                .quizPublicId(this.publicId)
                 .title(new QuizTitle(this.title))
                 .content(new QuizContent(this.content))
                 .choices(new Choices(choiceList))
@@ -88,3 +90,4 @@ class QuizEntity {
                 .build();
     }
 }
+

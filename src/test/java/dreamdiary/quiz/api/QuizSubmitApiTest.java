@@ -55,7 +55,7 @@ class QuizSubmitApiTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                         {
-                            "choiceId": "%s"
+                            "choicePublicId": "%s"
                         }
                         """.formatted(givenChoiceId)));
 
