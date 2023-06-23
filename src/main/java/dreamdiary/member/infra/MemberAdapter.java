@@ -14,6 +14,11 @@ class MemberAdapter implements MemberPort {
     private final MemberEntityRepository memberEntityRepository;
 
     @Override
+    public Optional<Long> findMemberUniqIdBy(final MemberPublicId id) {
+        return memberEntityRepository.findByPublicId(id).map(MemberEntity::getId);
+    }
+
+    @Override
     public Optional<Member> findBy(final MemberPublicId id) {
         return memberEntityRepository.findByPublicId(id).map(MemberEntity::toMember);
     }
