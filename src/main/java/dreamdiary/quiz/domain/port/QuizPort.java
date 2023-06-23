@@ -1,4 +1,4 @@
-package dreamdiary.quiz.domain;
+package dreamdiary.quiz.domain.port;
 
 import dreamdiary.quiz.domain.model.Quiz;
 import dreamdiary.quiz.domain.model.QuizPublicId;
@@ -7,7 +7,7 @@ import dreamdiary.quiz.domain.model.QuizTitle;
 
 import java.util.Optional;
 
-public interface QuizRepository {
+public interface QuizPort {
     /**
      * 동일한 퀴즈 명이 존재하는지 확인합니다.
      * @param title 퀴즈 제목

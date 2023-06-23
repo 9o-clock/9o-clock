@@ -1,6 +1,5 @@
 package dreamdiary.quiz.app;
 
-import dreamdiary.quiz.domain.QuizRepository;
 import dreamdiary.quiz.domain.event.QuizGeneratedEvent;
 import dreamdiary.quiz.domain.model.Choice;
 import dreamdiary.quiz.domain.model.Choices;
@@ -9,6 +8,7 @@ import dreamdiary.quiz.domain.model.QuizContent;
 import dreamdiary.quiz.domain.model.QuizException;
 import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.domain.model.QuizTitle;
+import dreamdiary.quiz.domain.port.QuizPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 class QuizAddService implements QuizAddUseCase {
-    private final QuizRepository quizRepository;
+    private final QuizPort quizPort;
     private final ApplicationEventPublisher publisher;
 
     @Override
     public void addQuiz(final QuizAddRequest request) {
         final Quiz quiz = generateQuiz(request);
-        if (quizRepository.isTitleAlreadyExists(quiz.getTitle())) throw QuizException.duplicatedTitleExists();
+        if (quizPort.isTitleAlreadyExists(quiz.getTitle())) throw QuizException.duplicatedTitleExists();
         publisher.publishEvent(QuizGeneratedEvent.mapped(quiz));
     }
 
@@ -37,7 +37,7 @@ class QuizAddService implements QuizAddUseCase {
                 .toList();
 
         final Choices choices = new Choices(choiceList);
-        QuizPublicId quizPublicId = quizRepository.obtainQuizPublicId();
+        QuizPublicId quizPublicId = quizPort.obtainQuizPublicId();
 
         return Quiz.builder()
                 .quizPublicId(quizPublicId)

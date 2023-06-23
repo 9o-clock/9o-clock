@@ -26,7 +26,7 @@ class QuizSubmitServiceTest extends QuizTestHelper {
     void submitQuiz_throw_not_found_quiz_exception() {
         final String givenPublicId = "quizPublicId";
         final QuizSubmitRequest givenRequest = anQuizSubmitRequest().build();
-        BDDMockito.given(mockQuizRepository.findBy((QuizPublicId) any())).willReturn(Optional.empty());
+        BDDMockito.given(mockQuizPort.findBy((QuizPublicId) any())).willReturn(Optional.empty());
 
         final QuizException exception = catchThrowableOfType(() ->
                         quizSubmitService.submitQuiz(givenPublicId, givenRequest),

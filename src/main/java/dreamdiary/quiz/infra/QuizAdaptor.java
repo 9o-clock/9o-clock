@@ -1,11 +1,11 @@
 package dreamdiary.quiz.infra;
 
-import dreamdiary.quiz.domain.QuizRepository;
 import dreamdiary.quiz.domain.model.Quiz;
 import dreamdiary.quiz.domain.model.QuizException;
 import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.domain.model.QuizSubmit;
 import dreamdiary.quiz.domain.model.QuizTitle;
+import dreamdiary.quiz.domain.port.QuizPort;
 import dreamdiary.support.cache.CacheKey;
 import dreamdiary.support.cache.CacheStore;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 @Component
-class QuizAdaptor implements QuizRepository {
+class QuizAdaptor implements QuizPort {
     private final QuizEntityRepository quizEntityRepository;
     private final QuizSubmitRepository quizSubmitRepository;
     private final CacheStore cacheStore;
@@ -78,9 +78,9 @@ class QuizAdaptor implements QuizRepository {
         final Long choiceId = (Long) quizArgsIdMap.get(quizSubmit.choicePublicId());
         final Long quizId = (Long) quizArgsIdMap.get(quizSubmit.quizPublicId().value());
 
-        final QuizSubmitEntity quizSubmitEntity = new QuizSubmitEntity(quizId, 1L, choiceId);
+        final QuizSubmitEntity quizSubmitEntity = new QuizSubmitEntity(quizId, quizSubmit.submitterUniqId(), choiceId);
 
-        quizSubmitRepository.insertQuizSubmitEntity(quizSubmitEntity.getQuizId(), quizSubmitEntity.getMemberId(),
+        quizSubmitRepository.insertQuizSubmitEntity(quizSubmitEntity.getQuizId(), quizSubmitEntity.getSubmitterId().value(),
                 quizSubmitEntity.getChoiceId(), quizSubmitEntity.getCreatedAt(), quizSubmitEntity.getUpdatedAt());
     }
 }

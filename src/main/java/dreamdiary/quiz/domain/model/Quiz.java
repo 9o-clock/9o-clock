@@ -17,7 +17,8 @@ public class Quiz {
     private final LocalDateTime answerReleaseAt;
 
     @Builder
-    public Quiz(final QuizPublicId quizPublicId, final QuizTitle title, final QuizContent content, final Choices choices, final LocalDateTime releaseAt, final LocalDateTime answerReleaseAt) {
+    public Quiz(final QuizPublicId quizPublicId, final QuizTitle title, final QuizContent content,
+                final Choices choices, final LocalDateTime releaseAt, final LocalDateTime answerReleaseAt) {
         if (null == quizPublicId || null == title || null == content) throw QuizException.invalidFormat();
         if (null == choices || null == releaseAt || null == answerReleaseAt) throw QuizException.invalidFormat();
         if (!answerReleaseAt.isAfter(releaseAt)) throw QuizException.invalidFormat();
@@ -29,10 +30,12 @@ public class Quiz {
         this.answerReleaseAt = answerReleaseAt;
     }
 
-    public QuizSubmit submit(final String memberId, final String choicePublicId) {
+    public QuizSubmit submit(final SubmitterUniqId submitterUniqId, final String choicePublicId) {
+        if (null == submitterUniqId) throw QuizException.invalidFormat();
         if (!StringUtils.hasText(choicePublicId)) throw QuizException.invalidFormat();
-        if (this.choices.values().stream().filter(choice -> Objects.equals(choice.publicId(), choicePublicId)).findFirst().isEmpty()) throw QuizException.notFoundChoice();
+        if (this.choices.values().stream().filter(choice -> Objects.equals(choice.publicId(), choicePublicId)).findFirst().isEmpty())
+            throw QuizException.notFoundChoice();
         if (this.releaseAt.isAfter(LocalDateTime.now())) throw QuizException.notSubmitAt();
-        return new QuizSubmit(this.quizPublicId, memberId, choicePublicId);
+        return new QuizSubmit(this.quizPublicId, submitterUniqId, choicePublicId);
     }
 }

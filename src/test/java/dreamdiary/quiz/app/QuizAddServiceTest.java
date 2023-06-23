@@ -27,14 +27,14 @@ class QuizAddServiceTest extends QuizTestHelper {
 
         quizAddService.addQuiz(givenRequest);
 
-        verify(mockQuizRepository, times(1)).obtainQuizPublicId();
+        verify(mockQuizPort, times(1)).obtainQuizPublicId();
     }
 
     @DisplayName("동일한 제목이 존재하면 예외처리")
     @Test
     void addQuiz_throw_alreadyExistsTitle_exception() {
         final QuizAddRequest givenRequest = anQuizAddRequest().build();
-        BDDMockito.given(mockQuizRepository.isTitleAlreadyExists(any())).willReturn(true);
+        BDDMockito.given(mockQuizPort.isTitleAlreadyExists(any())).willReturn(true);
 
         final QuizException exception = Assertions.assertThrows(QuizException.class, () ->
                 quizAddService.addQuiz(givenRequest));
@@ -46,7 +46,7 @@ class QuizAddServiceTest extends QuizTestHelper {
     void addQuiz_publish_quiz_generated_event() {
         final QuizAddRequest givenRequest = anQuizAddRequest().build();
         final String givenObtainId = "OBTAIN_ID";
-        BDDMockito.given(mockQuizRepository.obtainQuizPublicId()).willReturn(new QuizPublicId(givenObtainId));
+        BDDMockito.given(mockQuizPort.obtainQuizPublicId()).willReturn(new QuizPublicId(givenObtainId));
 
         quizAddService.addQuiz(givenRequest);
 

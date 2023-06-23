@@ -2,13 +2,13 @@ package dreamdiary.quiz.helper;
 
 import dreamdiary.quiz.app.QuizAddRequest;
 import dreamdiary.quiz.app.QuizSubmitRequest;
-import dreamdiary.quiz.domain.QuizRepository;
 import dreamdiary.quiz.domain.model.Choice;
 import dreamdiary.quiz.domain.model.Choices;
 import dreamdiary.quiz.domain.model.Quiz;
 import dreamdiary.quiz.domain.model.QuizContent;
 import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.domain.model.QuizTitle;
+import dreamdiary.quiz.domain.port.QuizPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -28,7 +28,7 @@ import static org.mockito.ArgumentMatchers.any;
 @ExtendWith(MockitoExtension.class)
 public abstract class QuizTestHelper {
     @Mock
-    protected QuizRepository mockQuizRepository;
+    protected QuizPort mockQuizPort;
     @Mock
     protected ApplicationEventPublisher mockPublisher;
     @Captor
@@ -38,9 +38,9 @@ public abstract class QuizTestHelper {
 
     @BeforeEach
     void setUp() {
-        Mockito.lenient().when(mockQuizRepository.isTitleAlreadyExists(any())).thenReturn(false);
-        Mockito.lenient().when(mockQuizRepository.findBy((QuizPublicId) any())).thenReturn(Optional.of(anQuiz().build()));
-        Mockito.lenient().when(mockQuizRepository.obtainQuizPublicId()).thenReturn(new QuizPublicId(UUID.randomUUID().toString()));
+        Mockito.lenient().when(mockQuizPort.isTitleAlreadyExists(any())).thenReturn(false);
+        Mockito.lenient().when(mockQuizPort.findBy((QuizPublicId) any())).thenReturn(Optional.of(anQuiz().build()));
+        Mockito.lenient().when(mockQuizPort.obtainQuizPublicId()).thenReturn(new QuizPublicId(UUID.randomUUID().toString()));
 
     }
 

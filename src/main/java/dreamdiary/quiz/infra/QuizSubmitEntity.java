@@ -1,6 +1,7 @@
 package dreamdiary.quiz.infra;
 
 import dreamdiary.quiz.domain.model.QuizException;
+import dreamdiary.quiz.domain.model.SubmitterUniqId;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,8 +22,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "QUIZ_SUBMIT", indexes = {
-        @Index(name = "IDX_QUIZ_SUBMIT_QUIZ_ID_MEMBER_ID", columnList = "quiz_id,member_id"),
-        @Index(name = "IDX_QUIZ_SUBMIT_MEMBER_ID", columnList = "member_id"),
+        @Index(name = "IDX_QUIZ_SUBMIT_QUIZ_ID_SUBMITTER_ID", columnList = "quiz_id,submitter_id"),
+        @Index(name = "IDX_QUIZ_SUBMIT_SUBMITTER_ID", columnList = "submitter_id"),
         @Index(name = "IDX_QUIZ_SUBMIT_CHOICE_ID", columnList = "choice_id")
 })
 @Entity
@@ -32,8 +34,9 @@ class QuizSubmitEntity {
     private Long id;
     @Column(name = "quiz_id", nullable = false)
     private Long quizId;
-    @Column(name = "member_id", nullable = false)
-    private Long memberId;
+    @Convert(converter = SubmitterUniqIdConverter.class)
+    @Column(name = "submitter_id", nullable = false, columnDefinition = "member_id")
+    private SubmitterUniqId submitterId;
     @Column(name = "choice_id", nullable = false)
     private Long choiceId;
     @Column(name = "created_at", nullable = false)
@@ -41,10 +44,10 @@ class QuizSubmitEntity {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    QuizSubmitEntity(final Long quizId, final Long memberId, final Long choiceId) {
-        if (null == quizId || null == memberId || null == choiceId) throw QuizException.invalidFormat();
+    QuizSubmitEntity(final Long quizId, final SubmitterUniqId submitterId, final Long choiceId) {
+        if (null == quizId || null == submitterId || null == choiceId) throw QuizException.invalidFormat();
         this.quizId = quizId;
-        this.memberId = memberId;
+        this.submitterId = submitterId;
         this.choiceId = choiceId;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = this.createdAt;

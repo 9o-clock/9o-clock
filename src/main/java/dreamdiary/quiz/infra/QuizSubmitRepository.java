@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 interface QuizSubmitRepository extends JpaRepository<QuizSubmitEntity, Long> {
     @Modifying
-    @Query(value = "INSERT INTO QUIZ_SUBMIT (quiz_id, member_id, choice_id, created_at, updated_at) VALUES (:quizId, :memberId, :choiceId, :createdAt, :updatedAt)", nativeQuery = true)
+    @Query(value = "INSERT INTO QUIZ_SUBMIT (quiz_id, submitter_id, choice_id, created_at, updated_at) VALUES (:quizId, :submitterId, :choiceId, :createdAt, :updatedAt)", nativeQuery = true)
     void insertQuizSubmitEntity(@Param("quizId") Long quizId,
-                                @Param("memberId") Long memberId,
+                                @Param("submitter_id") Long submitterId,
                                 @Param("choiceId") Long choiceId,
                                 @Param("createdAt") LocalDateTime createdAt,
                                 @Param("updatedAt") LocalDateTime updatedAt);
