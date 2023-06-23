@@ -31,13 +31,13 @@ class QuizAddService implements QuizAddUseCase {
     private Quiz generateQuiz(final QuizAddRequest request) {
         final QuizTitle title = new QuizTitle(request.getTitle());
         final QuizContent content = new QuizContent(request.getContent());
-        List<Choice> choiceList = request.getChoices()
+        final List<Choice> choiceList = request.getChoices()
                 .stream()
                 .map(Choice::new)
                 .toList();
 
         final Choices choices = new Choices(choiceList);
-        QuizPublicId quizPublicId = quizPort.obtainQuizPublicId();
+        final QuizPublicId quizPublicId = quizPort.obtainQuizPublicId();
 
         return Quiz.builder()
                 .quizPublicId(quizPublicId)
