@@ -8,7 +8,9 @@ import dreamdiary.quiz.domain.model.Quiz;
 import dreamdiary.quiz.domain.model.QuizContent;
 import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.domain.model.QuizTitle;
+import dreamdiary.quiz.domain.model.SubmitterUniqId;
 import dreamdiary.quiz.domain.port.QuizPort;
+import dreamdiary.quiz.domain.port.SubmitterPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -31,6 +33,8 @@ public abstract class QuizTestHelper {
     protected QuizPort mockQuizPort;
     @Mock
     protected ApplicationEventPublisher mockPublisher;
+    @Mock
+    protected SubmitterPort mockSubmitterPort;
     @Captor
     protected ArgumentCaptor<QuizAddRequest> quizAddRequestCaptor;
     @Captor
@@ -41,7 +45,7 @@ public abstract class QuizTestHelper {
         Mockito.lenient().when(mockQuizPort.isTitleAlreadyExists(any())).thenReturn(false);
         Mockito.lenient().when(mockQuizPort.findBy((QuizPublicId) any())).thenReturn(Optional.of(anQuiz().build()));
         Mockito.lenient().when(mockQuizPort.obtainQuizPublicId()).thenReturn(new QuizPublicId(UUID.randomUUID().toString()));
-
+        Mockito.lenient().when(mockSubmitterPort.verify(any())).thenReturn(new SubmitterUniqId(1L));
     }
 
     protected Quiz.QuizBuilder anQuiz() {

@@ -35,7 +35,7 @@ class QuizSubmitEntity {
     @Column(name = "quiz_id", nullable = false)
     private Long quizId;
     @Convert(converter = SubmitterUniqIdConverter.class)
-    @Column(name = "submitter_id", nullable = false, columnDefinition = "member_id")
+    @Column(name = "submitter_id", nullable = false)
     private SubmitterUniqId submitterId;
     @Column(name = "choice_id", nullable = false)
     private Long choiceId;
