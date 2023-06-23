@@ -19,9 +19,9 @@ class QuizSubmitService implements QuizSubmitUseCase {
     private final ApplicationEventPublisher publisher;
     private final SubmitterPort submitterPort;
     @Override
-    public void submitQuiz(final String quizPublicId, final QuizSubmitRequest request) {
+    public void submitQuiz(final String submitterPublicId, final String quizPublicId, final QuizSubmitRequest request) {
         final Quiz quiz = quizPort.findBy(new QuizPublicId(quizPublicId)).orElseThrow(QuizException::notFoundQuiz);
-        final SubmitterUniqId submitterUniqId = submitterPort.verify("MEMBER_PUBLIC_ID");
+        final SubmitterUniqId submitterUniqId = submitterPort.verify(submitterPublicId);
         final QuizSubmit quizSubmit = quiz.submit(submitterUniqId, request.getChoicePublicId());
         publisher.publishEvent(QuizSubmitGeneratedEvent.mapped(quizSubmit));
     }

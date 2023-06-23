@@ -24,12 +24,13 @@ class QuizSubmitServiceTest extends QuizTestHelper {
     @DisplayName("퀴즈가 존재하지 않을 경우 예외처리")
     @Test
     void submitQuiz_throw_not_found_quiz_exception() {
-        final String givenPublicId = "quizPublicId";
+        final String givenSubmitterPublicId = "submitterPublicId";
+        final String givenQuizPublicId = "quizPublicId";
         final QuizSubmitRequest givenRequest = anQuizSubmitRequest().build();
         BDDMockito.given(mockQuizPort.findBy((QuizPublicId) any())).willReturn(Optional.empty());
 
         final QuizException exception = catchThrowableOfType(() ->
-                        quizSubmitService.submitQuiz(givenPublicId, givenRequest),
+                        quizSubmitService.submitQuiz(givenSubmitterPublicId, givenQuizPublicId, givenRequest),
                 QuizException.class);
 
         assertThat(exception.getMessage()).isEqualTo(QuizException.notFoundQuiz().getMessage());
@@ -39,7 +40,7 @@ class QuizSubmitServiceTest extends QuizTestHelper {
     void submitQuiz_publish_quiz_submit_generated_event() {
         final QuizSubmitRequest givenRequest = anQuizSubmitRequest().build();
 
-        quizSubmitService.submitQuiz("givenQuizPublicId", givenRequest);
+        quizSubmitService.submitQuiz("givenSubmitterPublicId", "givenQuizPublicId", givenRequest);
 
         verify(mockPublisher, times(1)).publishEvent(publishEventCaptor.capture());
         assertThat(publishEventCaptor.getValue()).isNotNull();
