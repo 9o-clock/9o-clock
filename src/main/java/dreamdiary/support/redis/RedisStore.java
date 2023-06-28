@@ -36,16 +36,8 @@ class RedisStore implements CacheStore {
     }
 
     @Override
-    public <T> Optional<T> findData(final CacheKey cacheKey) {
-        Object value = redisTemplate.opsForValue().get(cacheKey);
-        if (null == value) {
-            return Optional.empty();
-        }
-        try {
-            return Optional.of((T) value);
-        } catch (ClassCastException e) {
-            return Optional.empty();
-        }
+    public Optional<Object> findData(final CacheKey cacheKey) {
+        return Optional.ofNullable(redisTemplate.opsForValue().get(cacheKey));
     }
 
     @Override
