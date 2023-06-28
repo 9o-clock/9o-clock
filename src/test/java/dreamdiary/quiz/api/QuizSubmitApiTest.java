@@ -1,5 +1,6 @@
 package dreamdiary.quiz.api;
 
+import dreamdiary.credential.MockMemberCredentialResolver;
 import dreamdiary.quiz.app.QuizSubmitRequest;
 import dreamdiary.quiz.app.QuizSubmitUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,10 +36,14 @@ class QuizSubmitApiTest {
     private ArgumentCaptor<String> quizIdCaptor;
     @Captor
     private ArgumentCaptor<QuizSubmitRequest> requestCaptor;
+    @Spy
+    private MockMemberCredentialResolver mockMemberCredentialResolver;
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(quizSubmitApi).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(quizSubmitApi)
+                .setCustomArgumentResolvers(mockMemberCredentialResolver)
+                .build();
     }
 
     @Test
