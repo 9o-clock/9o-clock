@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -71,5 +72,7 @@ class QuizSubmitApiTest {
                         """.formatted(givenChoiceId)));
 
         verify(mockQuizSubmitUseCase, times(1)).submitQuiz(memberIdCaptor.capture(), quizIdCaptor.capture(), requestCaptor.capture());
+        assertThat(memberIdCaptor.getValue()).isEqualTo(givenMemberPublicId);
+        assertThat(quizIdCaptor.getValue()).isEqualTo(givenQuizPublicId);
     }
 }
