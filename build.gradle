@@ -62,8 +62,11 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 }
 
+def querydslSrcDir = "$buildDir/generated/querydsl"
+
 querydsl {
     jpa = true
+    querydslSourcesDir = querydslSrcDir
 }
 
 compileQuerydsl {
@@ -71,6 +74,11 @@ compileQuerydsl {
 }
 
 sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslSrcDir]
+        }
+    }
     integrationTest {
         java {
             srcDir 'src/integrationTest/java'
