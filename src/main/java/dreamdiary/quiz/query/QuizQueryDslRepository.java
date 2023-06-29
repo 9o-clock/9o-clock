@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.infra.QChoiceEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,18 +20,19 @@ import static dreamdiary.quiz.infra.QQuizEntity.quizEntity;
 public class QuizQueryDslRepository {
     private final JPAQueryFactory queryFactory;
 
-    public Optional<QuizDto> findOne(final String quizPublicId) {
+    @Cacheable(value = "quizzes", key = "#publicId")
+    public Optional<QuizDto> findOne(final String publicId) {
         final List<QuizDto> transform = queryFactory.select(quizEntity)
                 .from(quizEntity)
                 .leftJoin(QChoiceEntity.choiceEntity)
                 .on(quizEntity.id.eq(QChoiceEntity.choiceEntity.quizId))
-                .where(quizEntity.publicId.eq(new QuizPublicId(quizPublicId)))
+                .where(quizEntity.publicId.eq(new QuizPublicId(publicId)))
                 .distinct()
                 .transform(
                         GroupBy.groupBy(quizEntity.id)
                                 .list(
                                         Projections.fields(QuizDto.class,
-                                                Expressions.asString(quizPublicId).as("publicId"),
+                                                Expressions.asString(publicId).as("publicId"),
                                                 quizEntity.title,
                                                 quizEntity.content,
                                                 quizEntity.releaseAt,
