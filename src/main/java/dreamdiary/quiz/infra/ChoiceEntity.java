@@ -28,6 +28,8 @@ class ChoiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "quiz_id")
+    private Long quizId;
     @Column(name = "public_id", nullable = false, unique = true)
     private String publicId;
     private String text;

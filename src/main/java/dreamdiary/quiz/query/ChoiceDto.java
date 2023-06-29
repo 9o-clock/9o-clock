@@ -1,13 +1,9 @@
 package dreamdiary.quiz.query;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
-@Builder
-@AllArgsConstructor
 @Getter
-public class ChoiceResponse {
+public class ChoiceDto {
     private String publicId;
     private String text;
 }

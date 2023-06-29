@@ -1,20 +1,20 @@
 package dreamdiary.quiz.query;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Builder
-@AllArgsConstructor
 @Getter
-public class QuizResponse {
-    private String quizPublicId;
+public class QuizDto {
+    private String publicId;
     private String title;
     private String content;
-    private List<ChoiceResponse> choices;
+    private List<ChoiceDto> choices;
     private LocalDateTime releaseAt;
     private LocalDateTime answerReleaseAt;
+
+    public void join(List<ChoiceDto> list) {
+        this.choices = list;
+    }
 }

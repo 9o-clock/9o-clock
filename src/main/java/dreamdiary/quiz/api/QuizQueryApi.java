@@ -1,8 +1,23 @@
 package dreamdiary.quiz.api;
 
-class QuizQueryApi {
+import dreamdiary.quiz.domain.model.QuizException;
+import dreamdiary.quiz.query.QuizQueryDslRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-//    @GetMapping
+@RequiredArgsConstructor
+@RestController
+class QuizQueryApi {
+    private final QuizQueryDslRepository quizQueryDslRepository;
+
+    @GetMapping("quizzes/{publicId}")
+    QuizFindResponse findQuiz(@PathVariable String publicId) {
+        return quizQueryDslRepository.findOne(publicId)
+                .map(QuizFindResponse::new)
+                .orElseThrow(QuizException::notFoundQuiz);
+    }
 
     /**
      * 퀴즈 정보 조회(아이디 기준)
