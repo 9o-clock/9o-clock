@@ -1,6 +1,6 @@
 package dreamdiary.quiz.api;
 
-import dreamdiary.quiz.domain.model.QuizException;
+import dreamdiary.quiz.domain.model.exception.QuizNotFoundException;
 import dreamdiary.quiz.query.QuizQueryDslRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ class QuizQueryApi {
     QuizFindResponse findQuiz(@PathVariable String publicId) {
         return quizQueryDslRepository.findOne(publicId)
                 .map(QuizFindResponse::new)
-                .orElseThrow(QuizException::notFoundQuiz);
+                .orElseThrow(QuizNotFoundException::new);
     }
 
     /**

@@ -1,5 +1,8 @@
 package dreamdiary.quiz.domain.model;
 
+import dreamdiary.quiz.domain.model.exception.ChoiceNotFoundException;
+import dreamdiary.quiz.domain.model.exception.InvalidQuizFormatException;
+import dreamdiary.quiz.domain.model.exception.NotSubmitAtException;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
@@ -19,9 +22,9 @@ public class Quiz {
     @Builder
     public Quiz(final QuizPublicId quizPublicId, final QuizTitle title, final QuizContent content,
                 final Choices choices, final LocalDateTime releaseAt, final LocalDateTime answerReleaseAt) {
-        if (null == quizPublicId || null == title || null == content) throw QuizException.invalidFormat();
-        if (null == choices || null == releaseAt || null == answerReleaseAt) throw QuizException.invalidFormat();
-        if (!answerReleaseAt.isAfter(releaseAt)) throw QuizException.invalidFormat();
+        if (null == quizPublicId || null == title || null == content) throw new InvalidQuizFormatException();
+        if (null == choices || null == releaseAt || null == answerReleaseAt) throw new InvalidQuizFormatException();
+        if (!answerReleaseAt.isAfter(releaseAt)) throw new InvalidQuizFormatException();
         this.quizPublicId = quizPublicId;
         this.title = title;
         this.content = content;
@@ -31,11 +34,11 @@ public class Quiz {
     }
 
     public QuizSubmit submit(final SubmitterUniqId submitterUniqId, final String choicePublicId) {
-        if (null == submitterUniqId) throw QuizException.invalidFormat();
-        if (!StringUtils.hasText(choicePublicId)) throw QuizException.invalidFormat();
+        if (null == submitterUniqId) throw new InvalidQuizFormatException();
+        if (!StringUtils.hasText(choicePublicId)) throw new InvalidQuizFormatException();
         if (this.choices.values().stream().filter(choice -> Objects.equals(choice.publicId(), choicePublicId)).findFirst().isEmpty())
-            throw QuizException.notFoundChoice();
-        if (this.releaseAt.isAfter(LocalDateTime.now())) throw QuizException.notSubmitAt();
+            throw new ChoiceNotFoundException();
+        if (this.releaseAt.isAfter(LocalDateTime.now())) throw new NotSubmitAtException();
         return new QuizSubmit(this.quizPublicId, submitterUniqId, choicePublicId);
     }
 }

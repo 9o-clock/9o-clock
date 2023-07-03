@@ -1,8 +1,8 @@
 package dreamdiary.quiz.app;
 
 import dreamdiary.quiz.domain.event.QuizSubmitGeneratedEvent;
-import dreamdiary.quiz.domain.model.QuizException;
 import dreamdiary.quiz.domain.model.QuizPublicId;
+import dreamdiary.quiz.domain.model.exception.QuizNotFoundException;
 import dreamdiary.quiz.helper.QuizTestHelper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,11 +29,9 @@ class QuizSubmitServiceTest extends QuizTestHelper {
         final QuizSubmitRequest givenRequest = anQuizSubmitRequest().build();
         BDDMockito.given(mockQuizPort.findBy((QuizPublicId) any())).willReturn(Optional.empty());
 
-        final QuizException exception = catchThrowableOfType(() ->
-                        quizSubmitService.submitQuiz(givenSubmitterPublicId, givenQuizPublicId, givenRequest),
-                QuizException.class);
-
-        assertThat(exception.getMessage()).isEqualTo(QuizException.notFoundQuiz().getMessage());
+        assertThat(catchThrowableOfType(() -> {
+            quizSubmitService.submitQuiz(givenSubmitterPublicId, givenQuizPublicId, givenRequest);
+        }, QuizNotFoundException.class)).isNotNull();
     }
 
     @Test

@@ -1,5 +1,6 @@
 package dreamdiary.quiz.domain.model;
 
+import dreamdiary.quiz.domain.model.exception.InvalidQuizFormatException;
 import org.springframework.util.StringUtils;
 
 public record QuizSubmit(
@@ -8,8 +9,8 @@ public record QuizSubmit(
         String choicePublicId
 ) {
     public QuizSubmit {
-        if (null == quizPublicId) throw QuizException.invalidFormat();
-        if (null == submitterUniqId) throw QuizException.invalidFormat();
-        if (!StringUtils.hasText(choicePublicId)) throw QuizException.invalidFormat();
+        if (null == quizPublicId) throw new InvalidQuizFormatException();
+        if (null == submitterUniqId) throw new InvalidQuizFormatException();
+        if (!StringUtils.hasText(choicePublicId)) throw new InvalidQuizFormatException();
     }
 }

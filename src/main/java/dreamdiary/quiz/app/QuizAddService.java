@@ -5,9 +5,9 @@ import dreamdiary.quiz.domain.model.Choice;
 import dreamdiary.quiz.domain.model.Choices;
 import dreamdiary.quiz.domain.model.Quiz;
 import dreamdiary.quiz.domain.model.QuizContent;
-import dreamdiary.quiz.domain.model.QuizException;
 import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.domain.model.QuizTitle;
+import dreamdiary.quiz.domain.model.exception.DuplicatedTitleExistsException;
 import dreamdiary.quiz.domain.port.QuizPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -24,7 +24,7 @@ class QuizAddService implements QuizAddUseCase {
     @Override
     public void addQuiz(final QuizAddRequest request) {
         final Quiz quiz = generateQuiz(request);
-        if (quizPort.isTitleAlreadyExists(quiz.getTitle())) throw QuizException.duplicatedTitleExists();
+        if (quizPort.isTitleAlreadyExists(quiz.getTitle())) throw new DuplicatedTitleExistsException();
         publisher.publishEvent(QuizGeneratedEvent.mapped(quiz));
     }
 

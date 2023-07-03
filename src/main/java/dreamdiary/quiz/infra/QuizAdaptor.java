@@ -1,10 +1,11 @@
 package dreamdiary.quiz.infra;
 
 import dreamdiary.quiz.domain.model.Quiz;
-import dreamdiary.quiz.domain.model.QuizException;
 import dreamdiary.quiz.domain.model.QuizPublicId;
 import dreamdiary.quiz.domain.model.QuizSubmit;
 import dreamdiary.quiz.domain.model.QuizTitle;
+import dreamdiary.quiz.domain.model.exception.ChoiceNotFoundException;
+import dreamdiary.quiz.domain.model.exception.QuizNotFoundException;
 import dreamdiary.quiz.domain.port.QuizPort;
 import dreamdiary.support.cache.CacheKey;
 import dreamdiary.support.cache.CacheStore;
@@ -63,7 +64,7 @@ class QuizAdaptor implements QuizPort {
 
         if (quizArgsIdMap.isEmpty()) {
             final QuizEntity quizEntity = quizEntityRepository.findByPublicId(quizSubmit.quizPublicId())
-                    .orElseThrow(QuizException::notFoundQuiz);
+                    .orElseThrow(QuizNotFoundException::new);
             quizArgsIdMap.put(quizSubmit.quizPublicId().value(), quizEntity.getId());
             for (ChoiceEntity choice : quizEntity.getChoices()) {
                 quizArgsIdMap.put(choice.getPublicId(), choice.getId());
@@ -73,7 +74,7 @@ class QuizAdaptor implements QuizPort {
         // 발생하면 안되는 장애
         if (!quizArgsIdMap.containsKey(quizSubmit.choicePublicId())) {
             cacheStore.removeKey(quizPublicIdCacheKey);
-            throw QuizException.notFoundChoice();
+            throw new ChoiceNotFoundException();
         }
         final Long choiceId = (Long) quizArgsIdMap.get(quizSubmit.choicePublicId());
         final Long quizId = (Long) quizArgsIdMap.get(quizSubmit.quizPublicId().value());

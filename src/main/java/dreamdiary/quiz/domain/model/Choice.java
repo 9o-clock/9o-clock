@@ -1,5 +1,6 @@
 package dreamdiary.quiz.domain.model;
 
+import dreamdiary.quiz.domain.model.exception.InvalidQuizFormatException;
 import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -21,8 +22,8 @@ public record Choice(
     }
 
     public Choice {
-        if (!StringUtils.hasText(publicId)) throw QuizException.invalidFormat();
-        if (!StringUtils.hasText(value) || 10 < value.length()) throw QuizException.invalidFormat();
-        if (null == isAnswer) throw QuizException.invalidFormat();
+        if (!StringUtils.hasText(publicId)) throw new InvalidQuizFormatException();
+        if (!StringUtils.hasText(value) || 10 < value.length()) throw new InvalidQuizFormatException();
+        if (null == isAnswer) throw new InvalidQuizFormatException();
     }
 }
