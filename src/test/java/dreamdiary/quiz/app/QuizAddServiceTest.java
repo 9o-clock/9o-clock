@@ -2,16 +2,16 @@ package dreamdiary.quiz.app;
 
 import dreamdiary.quiz.domain.event.QuizGeneratedEvent;
 import dreamdiary.quiz.domain.model.Choice;
-import dreamdiary.quiz.domain.model.QuizException;
 import dreamdiary.quiz.domain.model.QuizPublicId;
+import dreamdiary.quiz.domain.model.exception.DuplicatedTitleExistsException;
 import dreamdiary.quiz.helper.QuizTestHelper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -36,9 +36,9 @@ class QuizAddServiceTest extends QuizTestHelper {
         final QuizAddRequest givenRequest = anQuizAddRequest().build();
         BDDMockito.given(mockQuizPort.isTitleAlreadyExists(any())).willReturn(true);
 
-        final QuizException exception = Assertions.assertThrows(QuizException.class, () ->
-                quizAddService.addQuiz(givenRequest));
-        assertThat(exception.getMessage()).isEqualTo(QuizException.duplicatedTitleExists().getMessage());
+        assertThat(catchThrowableOfType(() -> {
+            quizAddService.addQuiz(givenRequest);
+        }, DuplicatedTitleExistsException.class)).isNotNull();
     }
 
     @DisplayName("퀴즈 생성 성공 이벤트 발행")

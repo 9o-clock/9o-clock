@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class QuizFindResponse {
+class QuizFindResponse {
     private final QuizDto quiz;
 }

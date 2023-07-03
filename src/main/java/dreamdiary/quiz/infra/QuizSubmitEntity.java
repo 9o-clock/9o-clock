@@ -1,7 +1,7 @@
 package dreamdiary.quiz.infra;
 
-import dreamdiary.quiz.domain.model.QuizException;
 import dreamdiary.quiz.domain.model.SubmitterUniqId;
+import dreamdiary.quiz.domain.model.exception.InvalidQuizFormatException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,7 +45,7 @@ class QuizSubmitEntity {
     private LocalDateTime updatedAt;
 
     QuizSubmitEntity(final Long quizId, final SubmitterUniqId submitterId, final Long choiceId) {
-        if (null == quizId || null == submitterId || null == choiceId) throw QuizException.invalidFormat();
+        if (null == quizId || null == submitterId || null == choiceId) throw new InvalidQuizFormatException();
         this.quizId = quizId;
         this.submitterId = submitterId;
         this.choiceId = choiceId;

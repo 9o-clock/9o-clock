@@ -55,6 +55,9 @@ dependencies {
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+
+    implementation group: 'io.github.prashant-ramcharan', name: 'courgette-jvm', version: '6.10.0'
+
     // integrationTest
     integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
     integrationTestImplementation 'io.cucumber:cucumber-java8:7.11.0'
