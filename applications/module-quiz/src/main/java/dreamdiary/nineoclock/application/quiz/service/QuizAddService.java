@@ -1,8 +1,7 @@
 package dreamdiary.nineoclock.application.quiz.service;
 
-import dreamdiary.nineoclock.application.quiz.port.inbound.QuizAddCommand;
-import dreamdiary.nineoclock.application.quiz.port.inbound.QuizAddUseCase;
-import dreamdiary.nineoclock.application.quiz.port.outbound.QuizOutPort;
+import dreamdiary.nineoclock.application.quiz.usecase.QuizAddCommand;
+import dreamdiary.nineoclock.application.quiz.usecase.QuizAddUseCase;
 import dreamdiary.nineoclock.domain.quiz.model.Choice;
 import dreamdiary.nineoclock.domain.quiz.model.Choices;
 import dreamdiary.nineoclock.domain.quiz.model.Quiz;
@@ -10,6 +9,7 @@ import dreamdiary.nineoclock.domain.quiz.model.QuizContent;
 import dreamdiary.nineoclock.domain.quiz.model.QuizPublicId;
 import dreamdiary.nineoclock.domain.quiz.model.QuizTitle;
 import dreamdiary.nineoclock.domain.quiz.model.exception.DuplicatedTitleExistsException;
+import dreamdiary.nineoclock.domain.quiz.outport.QuizOutPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

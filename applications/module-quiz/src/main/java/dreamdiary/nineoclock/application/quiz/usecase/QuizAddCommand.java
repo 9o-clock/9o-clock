@@ -1,4 +1,4 @@
-package dreamdiary.nineoclock.application.quiz.port.inbound;
+package dreamdiary.nineoclock.application.quiz.usecase;
 
 import java.time.LocalDateTime;
 import java.util.List;

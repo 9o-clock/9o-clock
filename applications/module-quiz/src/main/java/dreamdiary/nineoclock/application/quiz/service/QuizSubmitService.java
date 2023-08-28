@@ -1,14 +1,14 @@
 package dreamdiary.nineoclock.application.quiz.service;
 
-import dreamdiary.nineoclock.application.quiz.port.inbound.QuizSubmitCommand;
-import dreamdiary.nineoclock.application.quiz.port.inbound.QuizSubmitUseCase;
-import dreamdiary.nineoclock.application.quiz.port.outbound.QuizOutPort;
-import dreamdiary.nineoclock.application.quiz.port.outbound.SubmitterOutPort;
+import dreamdiary.nineoclock.application.quiz.usecase.QuizSubmitCommand;
+import dreamdiary.nineoclock.application.quiz.usecase.QuizSubmitUseCase;
 import dreamdiary.nineoclock.domain.quiz.model.Quiz;
 import dreamdiary.nineoclock.domain.quiz.model.QuizPublicId;
 import dreamdiary.nineoclock.domain.quiz.model.QuizSubmit;
 import dreamdiary.nineoclock.domain.quiz.model.SubmitterUniqId;
 import dreamdiary.nineoclock.domain.quiz.model.exception.QuizNotFoundException;
+import dreamdiary.nineoclock.domain.quiz.outport.QuizOutPort;
+import dreamdiary.nineoclock.domain.quiz.outport.SubmitterOutPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

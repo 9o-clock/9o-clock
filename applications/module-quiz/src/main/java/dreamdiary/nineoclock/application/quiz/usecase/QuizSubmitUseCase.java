@@ -1,4 +1,4 @@
-package dreamdiary.nineoclock.application.quiz.port.inbound;
+package dreamdiary.nineoclock.application.quiz.usecase;
 
 public interface QuizSubmitUseCase {
     void submitQuiz(QuizSubmitCommand request);

@@ -1,4 +1,4 @@
-package dreamdiary.nineoclock.application.quiz.port.outbound;
+package dreamdiary.nineoclock.domain.quiz.outport;
 
 import dreamdiary.nineoclock.domain.quiz.model.SubmitterUniqId;
 
