@@ -1,4 +1,0 @@
-dependencies {
-    implementation(project(":infrastructures:data-jpa-reactive"))
-    implementation(project(":components:domain-quiz"))
-}
