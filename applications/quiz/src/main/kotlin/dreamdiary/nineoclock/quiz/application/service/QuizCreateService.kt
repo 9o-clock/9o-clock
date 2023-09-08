@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service
 @Service
 internal class QuizCreateService(
     private val validator: Validator,
-    private val quizActionAuthorizer: QuizActionAuthorizer, // << interface
-    private val quizOutPort: QuizOutPort // << interface
+    private val quizActionAuthorizer: QuizActionAuthorizer,
+    private val quizOutPort: QuizOutPort
 ) : QuizCreateUseCase {
 
     override fun createQuiz(command: QuizCreateCommand): String {
@@ -32,6 +32,7 @@ internal class QuizCreateService(
             releaseAt = command.releaseAt,
             answerReleaseAt = command.answerReleaseAt
         )
+
         quizOutPort.save(quiz)
         return quiz.id.publicId.value
     }

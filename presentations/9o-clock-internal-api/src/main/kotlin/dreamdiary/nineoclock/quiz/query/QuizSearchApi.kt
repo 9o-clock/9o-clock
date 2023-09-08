@@ -1,5 +1,6 @@
 package dreamdiary.nineoclock.quiz.query
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import dreamdiary.nineoclock.quiz.application.usecase.ChoiceQueryResult
 import dreamdiary.nineoclock.quiz.application.usecase.QuizFindUseCase
 import dreamdiary.nineoclock.quiz.application.usecase.QuizQueryResult
@@ -24,7 +25,9 @@ internal data class QuizSearchResponse(
     val title: String,
     val content: String,
     val choices: List<ChoiceResponse>,
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     val releaseAt: LocalDateTime,
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     val answerReleaseAt: LocalDateTime,
 )
 

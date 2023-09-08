@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull
 import java.time.LocalDateTime
 
 data class QuizCreateCommand(
-    @field:NotBlank val creatorId: String,
+    @field:NotBlank val creatorId: String, // userSecureId
     @field:NotBlank val title: String,
     @field:NotBlank val content: String,
     @field:NotEmpty val choices: List<ChoiceInfoDto>,
