@@ -1,5 +1,6 @@
 package dreamdiary.nineoclock.quiz.domain.service
 
-interface QuizActionAuthorizer {
-    fun authorizeQuizCreateAction(creatorId: String) : Boolean
+internal interface QuizActionAuthorizer {
+    fun authorizeQuizCreateAction(creatorSecureId: String) : Boolean
+    fun authorizeQuizSubmitAction(submitterSecureId: String) : Boolean
 }

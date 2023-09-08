@@ -1,10 +1,18 @@
 package dreamdiary.nineoclock.quiz.helper
 
 import dreamdiary.nineoclock.quiz.application.usecase.ChoiceInfoDto
+import dreamdiary.nineoclock.quiz.application.usecase.QuizAnswerSubmitCommand
 import dreamdiary.nineoclock.quiz.application.usecase.QuizCreateCommand
+import dreamdiary.nineoclock.quiz.domain.model.Choice
+import dreamdiary.nineoclock.quiz.domain.model.ChoiceGroup
 import dreamdiary.nineoclock.quiz.domain.model.Quiz
+import dreamdiary.nineoclock.quiz.domain.model.QuizAnswerSubmit
+import dreamdiary.nineoclock.quiz.domain.model.QuizContent
+import dreamdiary.nineoclock.quiz.domain.model.QuizTitle
+import dreamdiary.nineoclock.quiz.domain.outbound.QuizAnswerSubmitOutPort
 import dreamdiary.nineoclock.quiz.domain.outbound.QuizOutPort
 import dreamdiary.nineoclock.quiz.domain.service.QuizActionAuthorizer
+import dreamdiary.nineoclock.shard.identifier.QuizPublicId
 import jakarta.validation.Validator
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
@@ -26,8 +34,14 @@ open class QuizTestHelper {
     @Mock
     internal lateinit var mockQuizOutPort: QuizOutPort
 
+    @Mock
+    internal lateinit var mockQuizAnswerSubmitOutPort: QuizAnswerSubmitOutPort
+
     @Captor
     internal lateinit var quizCreateCommandCaptor: ArgumentCaptor<QuizCreateCommand>
+
+    @Captor
+    internal lateinit var quizAnswerSubmitCommandCaptor: ArgumentCaptor<QuizAnswerSubmitCommand>
 
     @Captor
     internal lateinit var creatorIdCaptor: ArgumentCaptor<String>
@@ -35,9 +49,17 @@ open class QuizTestHelper {
     @Captor
     internal lateinit var quizCaptor: ArgumentCaptor<Quiz>
 
+    @Captor
+    internal lateinit var quizPublicIdCaptor: ArgumentCaptor<QuizPublicId>
+
+    @Captor
+    internal lateinit var quizAnswerSubmitCaptor: ArgumentCaptor<QuizAnswerSubmit>
+
     @BeforeEach
     fun setUp() {
+        Mockito.lenient().`when`(mockQuizOutPort.findByPublicId(any())).thenReturn(anQuiz())
         Mockito.lenient().`when`(mockQuizActionAuthorizer.authorizeQuizCreateAction(any())).thenReturn(true)
+        Mockito.lenient().`when`(mockQuizActionAuthorizer.authorizeQuizSubmitAction(any())).thenReturn(true)
     }
 
     internal fun anQuizCreateCommand(): QuizCreateCommand {
@@ -50,6 +72,49 @@ open class QuizTestHelper {
             answerReleaseAt = LocalDateTime.now()
         )
     }
+
+    internal fun anQuizAnswerSubmitCommand(): QuizAnswerSubmitCommand {
+        return QuizAnswerSubmitCommand(
+            submitterSecureId = "givenSubmitterSecureId",
+            quizPublicId = "givenQuizPublicId",
+            choicePublicId = "givenChoicePublicId"
+        )
+    }
+
+    internal fun anQuiz(): Quiz {
+        return Quiz(
+            title = QuizTitle("QuizTitle"),
+            content = QuizContent("QuizContent"),
+            choiceGroup = ChoiceGroup(
+                values = mutableListOf(
+                    anChoice(),
+                    anChoice()
+                )
+            ),
+            releaseAt = LocalDateTime.now().minusDays(2),
+            answerReleaseAt = LocalDateTime.now().minusDays(1)
+        )
+    }
+
+    internal fun customQuiz(choices: Collection<Choice>): Quiz {
+        return Quiz(
+            title = QuizTitle("QuizTitle"),
+            content = QuizContent("QuizContent"),
+            choiceGroup = ChoiceGroup(
+                values = choices
+            ),
+            releaseAt = LocalDateTime.now(),
+            answerReleaseAt = LocalDateTime.now()
+        )
+    }
+
+    internal fun anChoice(): Choice {
+        return Choice(
+            value = "A",
+            isAnswer = false
+        )
+    }
+
 }
 
 internal fun <T> capture(argumentCaptor: ArgumentCaptor<T>): T = argumentCaptor.capture()
