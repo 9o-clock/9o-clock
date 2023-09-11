@@ -1,9 +1,9 @@
 package dreamdiary.nineoclock.quiz.command
 
 import com.fasterxml.jackson.annotation.JsonFormat
-import dreamdiary.nineoclock.quiz.application.usecase.ChoiceInfoDto
-import dreamdiary.nineoclock.quiz.application.usecase.QuizCreateCommand
-import dreamdiary.nineoclock.quiz.application.usecase.QuizCreateUseCase
+import dreamdiary.nineoclock.quiz.application.port.inbound.ChoiceInfoDto
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizCreateCommand
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizCreateUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

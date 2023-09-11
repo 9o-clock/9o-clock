@@ -1,7 +1,7 @@
 package dreamdiary.nineoclock.quiz.infrastructure
 
+import dreamdiary.nineoclock.quiz.application.port.outbound.QuizOutPort
 import dreamdiary.nineoclock.quiz.domain.model.Quiz
-import dreamdiary.nineoclock.quiz.domain.outbound.QuizOutPort
 import dreamdiary.nineoclock.shard.identifier.QuizPublicId
 import org.springframework.stereotype.Component
 

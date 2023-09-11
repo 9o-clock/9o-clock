@@ -1,9 +1,9 @@
 package dreamdiary.nineoclock.quiz.application.service
 
-import dreamdiary.nineoclock.quiz.application.usecase.ChoiceQueryResult
-import dreamdiary.nineoclock.quiz.application.usecase.QuizFindUseCase
-import dreamdiary.nineoclock.quiz.application.usecase.QuizQueryResult
-import dreamdiary.nineoclock.quiz.domain.outbound.QuizOutPort
+import dreamdiary.nineoclock.quiz.application.port.inbound.ChoiceQueryResult
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizFindUseCase
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizQueryResult
+import dreamdiary.nineoclock.quiz.application.port.outbound.QuizOutPort
 import dreamdiary.nineoclock.shard.identifier.QuizPublicId
 import org.springframework.stereotype.Service
 

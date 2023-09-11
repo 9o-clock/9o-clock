@@ -1,9 +1,9 @@
 package dreamdiary.nineoclock.quiz.query
 
 import com.fasterxml.jackson.annotation.JsonFormat
-import dreamdiary.nineoclock.quiz.application.usecase.ChoiceQueryResult
-import dreamdiary.nineoclock.quiz.application.usecase.QuizFindUseCase
-import dreamdiary.nineoclock.quiz.application.usecase.QuizQueryResult
+import dreamdiary.nineoclock.quiz.application.port.inbound.ChoiceQueryResult
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizFindUseCase
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizQueryResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController

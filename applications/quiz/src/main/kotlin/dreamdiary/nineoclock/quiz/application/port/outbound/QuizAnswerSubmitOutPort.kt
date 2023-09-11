@@ -1,4 +1,4 @@
-package dreamdiary.nineoclock.quiz.domain.outbound
+package dreamdiary.nineoclock.quiz.application.port.outbound
 
 import dreamdiary.nineoclock.quiz.domain.model.QuizAnswerSubmit
 

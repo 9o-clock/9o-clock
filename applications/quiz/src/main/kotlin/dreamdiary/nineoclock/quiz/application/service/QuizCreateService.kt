@@ -1,13 +1,13 @@
 package dreamdiary.nineoclock.quiz.application.service
 
-import dreamdiary.nineoclock.quiz.application.usecase.QuizCreateCommand
-import dreamdiary.nineoclock.quiz.application.usecase.QuizCreateUseCase
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizCreateCommand
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizCreateUseCase
+import dreamdiary.nineoclock.quiz.application.port.outbound.QuizOutPort
 import dreamdiary.nineoclock.quiz.domain.model.Choice
 import dreamdiary.nineoclock.quiz.domain.model.ChoiceGroup
 import dreamdiary.nineoclock.quiz.domain.model.Quiz
 import dreamdiary.nineoclock.quiz.domain.model.QuizContent
 import dreamdiary.nineoclock.quiz.domain.model.QuizTitle
-import dreamdiary.nineoclock.quiz.domain.outbound.QuizOutPort
 import dreamdiary.nineoclock.quiz.domain.service.QuizActionAuthorizer
 import dreamdiary.nineoclock.shard.inline.isNotEmptyToThrow
 import jakarta.validation.Validator

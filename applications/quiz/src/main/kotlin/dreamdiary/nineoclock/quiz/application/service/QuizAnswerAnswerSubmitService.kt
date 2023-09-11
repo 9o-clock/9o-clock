@@ -1,9 +1,9 @@
 package dreamdiary.nineoclock.quiz.application.service
 
-import dreamdiary.nineoclock.quiz.application.usecase.QuizAnswerSubmitCommand
-import dreamdiary.nineoclock.quiz.application.usecase.QuizAnswerSubmitUseCase
-import dreamdiary.nineoclock.quiz.domain.outbound.QuizAnswerSubmitOutPort
-import dreamdiary.nineoclock.quiz.domain.outbound.QuizOutPort
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizAnswerSubmitCommand
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizAnswerSubmitUseCase
+import dreamdiary.nineoclock.quiz.application.port.outbound.QuizAnswerSubmitOutPort
+import dreamdiary.nineoclock.quiz.application.port.outbound.QuizOutPort
 import dreamdiary.nineoclock.quiz.domain.service.QuizActionAuthorizer
 import dreamdiary.nineoclock.shard.identifier.ChoicePublicId
 import dreamdiary.nineoclock.shard.identifier.QuizPublicId

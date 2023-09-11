@@ -1,6 +1,6 @@
 package dreamdiary.nineoclock.quiz.application.service
 
-import dreamdiary.nineoclock.quiz.application.usecase.QuizAnswerSubmitCommand
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizAnswerSubmitCommand
 import dreamdiary.nineoclock.quiz.helper.QuizTestHelper
 import dreamdiary.nineoclock.quiz.helper.any
 import dreamdiary.nineoclock.quiz.helper.capture

@@ -1,4 +1,4 @@
-package dreamdiary.nineoclock.quiz.application.usecase
+package dreamdiary.nineoclock.quiz.application.port.inbound
 
 interface QuizAnswerSubmitUseCase {
     fun submitQuizAnswer(command: QuizAnswerSubmitCommand)

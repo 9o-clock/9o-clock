@@ -1,6 +1,6 @@
 package dreamdiary.nineoclock.quiz.command
 
-import dreamdiary.nineoclock.quiz.application.usecase.QuizCreateUseCase
+import dreamdiary.nineoclock.quiz.application.port.inbound.QuizCreateUseCase
 import org.assertj.core.api.Assertions.*
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.BeforeEach
