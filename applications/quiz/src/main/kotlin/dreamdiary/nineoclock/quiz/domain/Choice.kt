@@ -1,4 +1,4 @@
-package dreamdiary.nineoclock.quiz.domain.model
+package dreamdiary.nineoclock.quiz.domain
 
 import dreamdiary.nineoclock.shard.identifier.ChoiceId
 

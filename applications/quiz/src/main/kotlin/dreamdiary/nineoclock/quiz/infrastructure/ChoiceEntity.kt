@@ -1,6 +1,6 @@
 package dreamdiary.nineoclock.quiz.infrastructure
 
-import dreamdiary.nineoclock.quiz.domain.model.Choice
+import dreamdiary.nineoclock.quiz.domain.Choice
 import dreamdiary.nineoclock.shard.identifier.ChoiceId
 import dreamdiary.nineoclock.shard.identifier.ChoicePublicId
 import dreamdiary.nineoclock.shard.identifier.ChoiceSecureId

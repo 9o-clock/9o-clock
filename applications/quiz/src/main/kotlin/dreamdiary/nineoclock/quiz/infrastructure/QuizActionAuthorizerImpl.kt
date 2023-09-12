@@ -1,6 +1,6 @@
 package dreamdiary.nineoclock.quiz.infrastructure
 
-import dreamdiary.nineoclock.quiz.domain.service.QuizActionAuthorizer
+import dreamdiary.nineoclock.quiz.domain.QuizActionAuthorizer
 import org.springframework.stereotype.Component
 
 @Component

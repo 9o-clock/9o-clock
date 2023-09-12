@@ -4,7 +4,7 @@ import dreamdiary.nineoclock.quiz.application.port.inbound.QuizAnswerSubmitComma
 import dreamdiary.nineoclock.quiz.application.port.inbound.QuizAnswerSubmitUseCase
 import dreamdiary.nineoclock.quiz.application.port.outbound.QuizAnswerSubmitOutPort
 import dreamdiary.nineoclock.quiz.application.port.outbound.QuizOutPort
-import dreamdiary.nineoclock.quiz.domain.service.QuizActionAuthorizer
+import dreamdiary.nineoclock.quiz.domain.QuizActionAuthorizer
 import dreamdiary.nineoclock.shard.identifier.ChoicePublicId
 import dreamdiary.nineoclock.shard.identifier.QuizPublicId
 import dreamdiary.nineoclock.shard.inline.isNotEmptyToThrow

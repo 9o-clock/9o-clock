@@ -1,10 +1,10 @@
 package dreamdiary.nineoclock.quiz.infrastructure
 
-import dreamdiary.nineoclock.quiz.domain.model.Choice
-import dreamdiary.nineoclock.quiz.domain.model.ChoiceGroup
-import dreamdiary.nineoclock.quiz.domain.model.Quiz
-import dreamdiary.nineoclock.quiz.domain.model.QuizContent
-import dreamdiary.nineoclock.quiz.domain.model.QuizTitle
+import dreamdiary.nineoclock.quiz.domain.Choice
+import dreamdiary.nineoclock.quiz.domain.ChoiceGroup
+import dreamdiary.nineoclock.quiz.domain.Quiz
+import dreamdiary.nineoclock.quiz.domain.QuizContent
+import dreamdiary.nineoclock.quiz.domain.QuizTitle
 import dreamdiary.nineoclock.shard.identifier.QuizId
 import dreamdiary.nineoclock.shard.identifier.QuizPublicId
 import dreamdiary.nineoclock.shard.identifier.QuizSecureId
