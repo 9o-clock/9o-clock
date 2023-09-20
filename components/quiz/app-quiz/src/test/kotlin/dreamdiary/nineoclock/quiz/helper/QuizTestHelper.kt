@@ -14,6 +14,7 @@ import dreamdiary.nineoclock.quiz.domain.QuizContent
 import dreamdiary.nineoclock.quiz.domain.QuizRepository
 import dreamdiary.nineoclock.quiz.domain.QuizTitle
 import dreamdiary.nineoclock.shard.identifier.QuizPublicId
+import jakarta.validation.Validation
 import jakarta.validation.Validator
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
@@ -26,8 +27,7 @@ import java.time.LocalDateTime
 
 @ExtendWith(MockitoExtension::class)
 open class QuizTestHelper {
-    @Mock
-    internal lateinit var mockValidator: Validator
+    internal var mockValidator: Validator = Validation.buildDefaultValidatorFactory().validator
 
     @Mock
     internal lateinit var mockQuizActionAuthorizer: QuizActionAuthorizer
@@ -88,7 +88,6 @@ open class QuizTestHelper {
     }
 
     internal fun setUpToFailed() {
-
     }
 
     internal fun anQuizCreateCommand(): QuizCreateCommand {
@@ -141,4 +140,3 @@ internal fun <T> any(): T {
     Mockito.any<T>()
     return null as T
 }
-

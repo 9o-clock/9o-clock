@@ -18,8 +18,6 @@ class QuizAnswerSubmitServiceTest : QuizTestHelper() {
     @DisplayName("입력 받은 정보를 검증 및 예외처리 합니다.")
     @Test
     fun submitQuizAnswer_validate_command_and_throw() {
-        BDDMockito.given(mockValidator.validate<QuizAnswerSubmitCommand>(any())).willThrow(RuntimeException())
-
         val exception = catchThrowableOfType({
             quizAnswerSubmitService.submitQuizAnswer(anQuizAnswerSubmitCommand())
         }, RuntimeException::class.java)
