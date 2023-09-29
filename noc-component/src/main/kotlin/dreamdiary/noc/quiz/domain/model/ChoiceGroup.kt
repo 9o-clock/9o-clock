@@ -1,4 +1,4 @@
-package dreamdiary.noc.quiz.domain
+package dreamdiary.noc.quiz.domain.model
 
 data class ChoiceGroup(
     val values: Collection<Choice>

@@ -1,6 +1,4 @@
-package dreamdiary.noc.quiz.domain
-
-import dreamdiary.nineoclock.shard.identifier.QuizId
+package dreamdiary.noc.quiz.domain.model
 
 data class QuizAnswerSubmit (
     val submitterId: String,

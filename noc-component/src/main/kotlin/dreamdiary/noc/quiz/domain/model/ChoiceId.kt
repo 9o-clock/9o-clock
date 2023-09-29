@@ -1,4 +1,4 @@
-package dreamdiary.noc.quiz.domain
+package dreamdiary.noc.quiz.domain.model
 
 import pcloud.dp.shard.identifier.ApplyIdentifier
 import pcloud.dp.shard.identifier.SpecialApplyIdentifier

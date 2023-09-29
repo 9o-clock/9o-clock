@@ -1,6 +1,5 @@
-package dreamdiary.noc.quiz.domain
+package dreamdiary.noc.quiz.domain.model
 
-import dreamdiary.nineoclock.shard.identifier.QuizId
 
 class Quiz(
     val title: QuizTitle,

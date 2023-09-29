@@ -3,9 +3,9 @@ package dreamdiary.noc.quiz.application
 import dreamdiary.noc.quiz.app.ChoiceInfoDto
 import dreamdiary.noc.quiz.app.QuizCreateCommand
 import dreamdiary.noc.quiz.app.QuizCreateService
-import dreamdiary.noc.quiz.domain.Quiz
-import dreamdiary.noc.quiz.domain.QuizRepository
-import dreamdiary.noc.shard.exception.ValidationListException
+import dreamdiary.noc.quiz.domain.model.Quiz
+import dreamdiary.noc.quiz.domain.model.QuizRepository
+import dreamdiary.noc.shard.exception.ValidationException
 import jakarta.validation.Validation
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
@@ -47,7 +47,7 @@ class QuizCreateServiceTest {
 
         assertThatCode {
             quizCreateService.createQuiz(givenCommand)
-        }.isInstanceOf(ValidationListException::class.java)
+        }.isInstanceOf(ValidationException::class.java)
 
         verify(validator, times(1)).validate(givenCommand)
     }
