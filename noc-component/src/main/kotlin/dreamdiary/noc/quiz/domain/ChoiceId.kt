@@ -1,4 +1,7 @@
-package dreamdiary.nineoclock.shard.identifier
+package dreamdiary.noc.quiz.domain
+
+import pcloud.dp.shard.identifier.ApplyIdentifier
+import pcloud.dp.shard.identifier.SpecialApplyIdentifier
 
 class ChoiceId : SpecialApplyIdentifier<ChoicePublicId, ChoiceSecureId> {
     constructor(): super(ChoicePublicId(), ChoiceSecureId())

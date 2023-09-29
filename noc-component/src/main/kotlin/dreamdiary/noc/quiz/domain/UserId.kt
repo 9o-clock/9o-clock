@@ -1,0 +1,1 @@
+package dreamdiary.noc.quiz.domain

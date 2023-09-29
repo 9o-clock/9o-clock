@@ -1,7 +1,5 @@
 package dreamdiary.noc.quiz.domain
 
-import dreamdiary.nineoclock.shard.identifier.ChoicePublicId
-
 data class ChoiceGroup(
     val values: Collection<Choice>
 ) {

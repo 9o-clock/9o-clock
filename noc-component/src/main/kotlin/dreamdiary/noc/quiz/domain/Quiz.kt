@@ -1,6 +1,5 @@
 package dreamdiary.noc.quiz.domain
 
-import dreamdiary.nineoclock.shard.identifier.ChoicePublicId
 import dreamdiary.nineoclock.shard.identifier.QuizId
 
 class Quiz(

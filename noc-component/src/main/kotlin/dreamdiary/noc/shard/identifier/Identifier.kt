@@ -1,4 +1,4 @@
-package dreamdiary.nineoclock.shard.identifier
+package pcloud.dp.shard.identifier
 
 import java.nio.charset.StandardCharsets
 import java.util.Base64
@@ -35,7 +35,7 @@ abstract class ApplyIdentifier(open val value: String = generate()) : Identifier
     }
 }
 
-abstract class SpecialApplyIdentifier<P: ApplyIdentifier, S: ApplyIdentifier>(
+abstract class SpecialApplyIdentifier<P:ApplyIdentifier, S:ApplyIdentifier>(
     open val publicId: P,
     open val secureId: S
 ) {
